@@ -3,7 +3,7 @@ import React from "react";
 
 type PostPropsType = {
     message:string
-    likeCount:number
+    likesCount:number
 }
 
 const Post = (props:PostPropsType) => {
@@ -12,7 +12,7 @@ const Post = (props:PostPropsType) => {
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLpH2L9SxARizd9V_dTyF1xaNW_71Tj0QjKQ&usqp=CAU" alt="avatar"/>
             {props.message}
             <div>
-                <span>{props.likeCount}</span>
+                <span>like</span> {props.likesCount}
             </div>
         </div>
     )
