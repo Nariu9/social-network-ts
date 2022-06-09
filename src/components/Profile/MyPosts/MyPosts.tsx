@@ -1,22 +1,11 @@
 import classes from "./MyPosts.module.css";
 import React from "react";
 import Post from "./Post/Post";
+import {PostsPropsType} from "../Profile";
 
-type MyPostsPropsType = {
-    posts: Array<PostsType>
-}
+const MyPosts = (props:PostsPropsType) => {
 
-type PostsType = {
-    id:number
-    message:string
-    likesCount:number
-}
-
-const MyPosts = (props:MyPostsPropsType) => {
-
-
-
-    let postsElements = props.posts.map(p => <Post message={p.message} likesCount={p.likesCount}/>)
+    let postsElements = props.posts.map(p => <Post key={p.id} id={p.id}  message={p.message} likesCount={p.likesCount}/>)
 
     return (
         <div className={classes.postsBlock}>
