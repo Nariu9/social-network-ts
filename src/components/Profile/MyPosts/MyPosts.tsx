@@ -1,9 +1,10 @@
 import classes from "./MyPosts.module.css";
 import React from "react";
 import Post from "./Post/Post";
-import {PostsPropsType} from "../Profile";
+import {ProfilePagePropsType} from "../../../App";
 
-const MyPosts = (props:PostsPropsType) => {
+
+const MyPosts = (props:ProfilePagePropsType) => {
 
     let postsElements = props.posts.map(p => <Post key={p.id} id={p.id}  message={p.message} likesCount={p.likesCount}/>)
 
