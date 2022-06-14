@@ -11,6 +11,7 @@ import Settings from "./components/Settings/Settings";
 
 type AppPropsType = {
     state: StateType
+    addPost:(postMessage: string)=>void
 }
 
 type StateType = {
@@ -50,7 +51,7 @@ function App(props: AppPropsType) {
             <Navbar/>
             <div className='app-wrapper-content'>
                 <Route path={'/dialogs'} render={() => <Dialogs state={props.state.dialogsPage}/>}/>
-                <Route path={'/profile'} render={() => <Profile state={props.state.profilePage}/>}/>
+                <Route path={'/profile'} render={() => <Profile state={props.state.profilePage} addPost={props.addPost}/>}/>
                 <Route path={'/news'} render={() => <News/>}/>
                 <Route path={'/music'} render={() => <Music/>}/>
                 <Route path={'/settings'} render={() => <Settings/>}/>

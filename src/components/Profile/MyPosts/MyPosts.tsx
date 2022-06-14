@@ -1,17 +1,24 @@
 import classes from "./MyPosts.module.css";
 import React from "react";
 import Post from "./Post/Post";
-import {ProfilePagePropsType} from "../../../App";
+import {PostPropsType} from "../../../App";
 
+type MyPostsPropsType = {
+    posts:Array<PostPropsType>
+    addPost:(postMessage: string)=>void
+}
 
-const MyPosts = (props: ProfilePagePropsType) => {
+const MyPosts = (props: MyPostsPropsType) => {
 
     let postsElements = props.posts.map(p => <Post key={p.id} id={p.id} message={p.message} likesCount={p.likesCount}/>)
 
     let newPostElement = React.createRef<HTMLTextAreaElement>()
 
     const addPost = () => {
-        alert(newPostElement.current?.value)
+        debugger
+        if (newPostElement.current) {
+            props.addPost(newPostElement.current.value)
+        }
     }
 
     return (

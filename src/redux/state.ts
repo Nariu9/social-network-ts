@@ -1,3 +1,5 @@
+import {PostPropsType} from "../App";
+
 let state = {
     profilePage: {
         posts: [
@@ -26,6 +28,16 @@ let state = {
         ]
     }
     /*sidebar:{}*/
+}
+
+export const addPost = (postMessage: string) => {
+    debugger
+    const newPost: PostPropsType = {
+        id: 5,
+        message: postMessage,
+        likesCount: 0
+    }
+    state.profilePage.posts.push(newPost)
 }
 
 export default state
