@@ -14,7 +14,7 @@ type AppPropsType = {
     addPost:(postMessage: string)=>void
 }
 
-type StateType = {
+export type StateType = {
     profilePage: ProfilePagePropsType
     dialogsPage: DialogsPagePropsType
 }
