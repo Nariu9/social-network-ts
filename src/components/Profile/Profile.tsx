@@ -7,7 +7,8 @@ import {ProfilePagePropsType} from "../../App";
 
 type PostsPropsType = {
     state: ProfilePagePropsType
-    addPost:(postMessage: string)=>void
+    addPost:()=>void
+    updateNewPostText:(newPostText: string)=>void
 }
 
 const Profile = (props: PostsPropsType) => {
@@ -15,7 +16,7 @@ const Profile = (props: PostsPropsType) => {
     return (
         <div>
             <ProfileInfo/>
-            <MyPosts posts={props.state.posts} addPost={props.addPost}/>
+            <MyPosts posts={props.state.posts} newPostText={props.state.newPostText} addPost={props.addPost} updateNewPostText={props.updateNewPostText}/>
         </div>
     )
 }

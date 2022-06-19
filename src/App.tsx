@@ -11,7 +11,10 @@ import Settings from "./components/Settings/Settings";
 
 type AppPropsType = {
     state: StateType
-    addPost:(postMessage: string)=>void
+    addPost:()=>void
+    updateNewPostText:(newPostText: string)=>void
+    addMessage:()=>void
+    updateNewMessageText:(newMessageText: string)=>void
 }
 
 export type StateType = {
@@ -21,11 +24,13 @@ export type StateType = {
 
 export type ProfilePagePropsType = {
     posts: Array<PostPropsType>
+    newPostText:string
 }
 
 export type DialogsPagePropsType = {
     dialogs: Array<DialogPropsType>
     messages: Array<MessagePropsType>
+    newMessageText:string
 }
 
 export type PostPropsType = {
@@ -50,8 +55,8 @@ function App(props: AppPropsType) {
             <Header/>
             <Navbar/>
             <div className='app-wrapper-content'>
-                <Route path={'/dialogs'} render={() => <Dialogs state={props.state.dialogsPage}/>}/>
-                <Route path={'/profile'} render={() => <Profile state={props.state.profilePage} addPost={props.addPost}/>}/>
+                <Route path={'/dialogs'} render={() => <Dialogs state={props.state.dialogsPage} addMessage={props.addMessage} updateNewMessageText={props.updateNewMessageText}/>}/>
+                <Route path={'/profile'} render={() => <Profile state={props.state.profilePage} addPost={props.addPost} updateNewPostText={props.updateNewPostText}/>}/>
                 <Route path={'/news'} render={() => <News/>}/>
                 <Route path={'/music'} render={() => <Music/>}/>
                 <Route path={'/settings'} render={() => <Settings/>}/>

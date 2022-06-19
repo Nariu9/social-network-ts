@@ -1,4 +1,4 @@
-import {PostPropsType} from "../App";
+import {MessagePropsType, PostPropsType} from "../App";
 import {renderEntireTree} from "../render";
 
 let state = {
@@ -8,7 +8,8 @@ let state = {
             {id: 2, message: 'It\'s my first post', likesCount: 20},
             {id: 3, message: 'Or it is not?', likesCount: 3},
             {id: 4, message: 'Hah...', likesCount: 0},
-        ]
+        ],
+        newPostText: 'Hallo!'
     },
     dialogsPage: {
         dialogs: [
@@ -26,18 +27,40 @@ let state = {
             {id: 4, message: 'Hi'},
             {id: 5, message: 'Hi'},
             {id: 6, message: 'Hi'}
-        ]
+        ],
+        newMessageText: 'Hi dude'
     }
     /*sidebar:{}*/
 }
 
-export const addPost = (postMessage: string) => {
+export const addPost = () => {
     const newPost: PostPropsType = {
         id: 5,
-        message: postMessage,
+        message: state.profilePage.newPostText,
         likesCount: 0
     }
     state.profilePage.posts.push(newPost)
+    state.profilePage.newPostText = ''
+    renderEntireTree(state)
+}
+
+export const updateNewPostText = (newPostText: string) => {
+    state.profilePage.newPostText = newPostText
+    renderEntireTree(state)
+}
+
+export const addMessage = () => {
+    const newMessage: MessagePropsType = {
+        id: 7,
+        message: state.dialogsPage.newMessageText
+    }
+    state.dialogsPage.messages.push(newMessage)
+    state.dialogsPage.newMessageText = ''
+    renderEntireTree(state)
+}
+
+export const updateNewMessageText = (newMessageText: string) => {
+    state.dialogsPage.newMessageText = newMessageText
     renderEntireTree(state)
 }
 
