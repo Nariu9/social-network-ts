@@ -39,10 +39,10 @@ export type MessagePropsType = {
 }
 
 export type ActionType =
-    ReturnType<typeof addPostActionCreator>
-    | ReturnType<typeof updateNewPostTextActionCreator>
-    | ReturnType<typeof addMessageActionCreator>
-    | ReturnType<typeof updateNewMessageTextActionCreator>
+    ReturnType<typeof addPostCreator>
+    | ReturnType<typeof updateNewPostTextCreator>
+    | ReturnType<typeof addMessageCreator>
+    | ReturnType<typeof updateNewMessageTextCreator>
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
@@ -81,7 +81,7 @@ let store: StoreType = {
         }
         /*sidebar:{}*/
     },
-    _callSubscriber(state) {
+    _callSubscriber() {
         console.log('State changed')
     },
 
@@ -120,13 +120,13 @@ let store: StoreType = {
     }
 }
 
-export const addPostActionCreator = () => ({type: ADD_POST}) as const
-export const updateNewPostTextActionCreator = (newPostText: string) => ({
+export const addPostCreator = () => ({type: ADD_POST}) as const
+export const updateNewPostTextCreator = (newPostText: string) => ({
     type: UPDATE_NEW_POST_TEXT,
     newPostText: newPostText
 }) as const
-export const addMessageActionCreator = () => ({type: ADD_MESSAGE}) as const
-export const updateNewMessageTextActionCreator = (newMessageText: string) => ({
+export const addMessageCreator = () => ({type: ADD_MESSAGE}) as const
+export const updateNewMessageTextCreator = (newMessageText: string) => ({
     type: UPDATE_NEW_MESSAGE_TEXT,
     newMessageText: newMessageText
 }) as const
