@@ -11,7 +11,7 @@ import Settings from "./components/Settings/Settings";
 import {StoreType} from "./redux/state";
 
 type AppPropsType = {
-    store:StoreType
+    store: StoreType
 }
 
 function App(props: AppPropsType) {
@@ -24,11 +24,9 @@ function App(props: AppPropsType) {
             <Navbar/>
             <div className='app-wrapper-content'>
                 <Route path={'/dialogs'} render={() => <Dialogs state={state.dialogsPage}
-                                                                addMessage={props.store.addMessage.bind(props.store)}
-                                                                updateNewMessageText={props.store.updateNewMessageText.bind(props.store)}/>}/>
+                                                                dispatch={props.store.dispatch.bind(props.store)}/>}/>
                 <Route path={'/profile'} render={() => <Profile state={state.profilePage}
-                                                                addPost={props.store.addPost.bind(props.store)}
-                                                                updateNewPostText={props.store.updateNewPostText.bind(props.store)}/>}/>
+                                                                dispatch={props.store.dispatch.bind(props.store)}/>}/>
                 <Route path={'/news'} render={() => <News/>}/>
                 <Route path={'/music'} render={() => <Music/>}/>
                 <Route path={'/settings'} render={() => <Settings/>}/>
