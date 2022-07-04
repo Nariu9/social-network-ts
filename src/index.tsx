@@ -1,12 +1,12 @@
 import React from 'react';
-import store, {StateType} from "./redux/state";
+import store, {ReduxStateType} from "./redux/redux-store";
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import {BrowserRouter} from "react-router-dom";
 
 
-const renderEntireTree = (state:StateType) => {
+const renderEntireTree = (state:ReduxStateType) => {
     ReactDOM.render(
         <BrowserRouter>
             <App store={store}/>
@@ -15,4 +15,7 @@ const renderEntireTree = (state:StateType) => {
 
 renderEntireTree(store.getState())
 
-store.subscribe(renderEntireTree)
+store.subscribe(()=>{
+    let state = store.getState()
+    renderEntireTree(state)
+})
