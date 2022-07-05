@@ -11,8 +11,10 @@ import {ActionType} from "./store";
 //типизация с использованием типа StateType от старого store из файла store.ts
 
 export type ReduxStoreType = Store<ReduxStateType, ActionType>
-export type ReduxStateType = ReturnType<RootState>
-type RootState = typeof reducers;
+export type ReduxStateType = ReturnType<RootState> // ReturnType что функция возвращает
+export type RootState = typeof reducers;  // типизация функции combineReducers
+
+// export type ReduxStateType = ReturnType<typeof reducers> короткая запись строк 14-15
 
 
 const reducers = combineReducers({
@@ -21,6 +23,6 @@ const reducers = combineReducers({
     sidebar: sidebarReducer
 })
 
-const store: ReduxStoreType = createStore(reducers)
+const store: ReduxStoreType = createStore(reducers)     //возможно типизация store излишня
 
 export default store
