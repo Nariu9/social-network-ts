@@ -1,9 +1,9 @@
-import {ActionType, DialogsPagePropsType, MessagePropsType} from "./store";
+import {ActionType, DialogsPageStateType, MessagePropsType} from "./store";
 
 const ADD_MESSAGE = 'ADD-MESSAGE';
 const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT';
 
-const initialState: DialogsPagePropsType = {
+const initialState: DialogsPageStateType = {
     dialogs: [
         {id: 1, name: 'Dimych'},
         {id: 2, name: 'Andrey'},

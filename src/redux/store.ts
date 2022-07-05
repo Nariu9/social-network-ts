@@ -11,17 +11,17 @@ export type StoreType = {
 }
 
 export type StateType = {
-    profilePage: ProfilePagePropsType
-    dialogsPage: DialogsPagePropsType
+    profilePage: ProfilePageStateType
+    dialogsPage: DialogsPageStateType
     sidebar:{}
 }
 
-export type ProfilePagePropsType = {
+export type ProfilePageStateType = {
     posts: Array<PostPropsType>
     newPostText: string
 }
 
-export type DialogsPagePropsType = {
+export type DialogsPageStateType = {
     dialogs: Array<DialogPropsType>
     messages: Array<MessagePropsType>
     newMessageText: string
