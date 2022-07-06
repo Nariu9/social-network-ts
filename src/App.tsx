@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
-import Dialogs from "./components/Dialogs/Dialogs";
+import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import {Redirect, Route} from "react-router-dom";
 import Profile from "./components/Profile/Profile";
 import News from "./components/News/News";
@@ -16,7 +16,7 @@ type AppPropsType = {
 
 function App(props: AppPropsType) {
 
-    const state = props.store.getState()
+    //const state = props.store.getState()
 
     return (
         <div className='app-wrapper'>
@@ -24,10 +24,8 @@ function App(props: AppPropsType) {
             <Navbar/>
             <div className='app-wrapper-content'>
                 <Route path={'/'} exact render={() => <Redirect to={'/profile'}/>}/>
-                <Route path={'/dialogs'} render={() => <Dialogs state={state.dialogsPage}
-                                                                dispatch={props.store.dispatch.bind(props.store)}/>}/>
-                <Route path={'/profile'} render={() => <Profile state={state.profilePage}
-                                                                dispatch={props.store.dispatch.bind(props.store)}/>}/>
+                <Route path={'/dialogs'} render={() => <DialogsContainer store={props.store}/>}/>
+                <Route path={'/profile'} render={() => <Profile store={props.store}/>}/>
                 <Route path={'/news'} render={() => <News/>}/>
                 <Route path={'/music'} render={() => <Music/>}/>
                 <Route path={'/settings'} render={() => <Settings/>}/>
