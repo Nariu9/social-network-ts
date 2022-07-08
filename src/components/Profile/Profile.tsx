@@ -7,16 +7,16 @@ import MyPostsContainer from "./MyPosts/MyPostsContainer";
 
 
 
-type PostsPropsType = {
+/*type PostsPropsType = {
     store: ReduxStoreType
-}
+}*/
 
-const Profile = (props: PostsPropsType) => {
+const Profile = () => {
 
     return (
         <div>
             <ProfileInfo/>
-            <MyPostsContainer store={props.store}/>
+            <MyPostsContainer/>
         </div>
     )
 }
