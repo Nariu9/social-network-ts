@@ -16,29 +16,29 @@ export type StateType = {
     sidebar:{}
 }
 
-export type ProfilePageStateType = {
+type ProfilePageStateType = {
     posts: Array<PostPropsType>
     newPostText: string
 }
 
-export type DialogsPageStateType = {
+type DialogsPageStateType = {
     dialogs: Array<DialogPropsType>
     messages: Array<MessagePropsType>
     newMessageText: string
 }
 
-export type PostPropsType = {
+type PostPropsType = {
     id: number
     message: string
     likesCount: number
 }
 
-export type DialogPropsType = {
+type DialogPropsType = {
     id: number
     name: string
 }
 
-export type MessagePropsType = {
+type MessagePropsType = {
     id: number
     message: string
 }
