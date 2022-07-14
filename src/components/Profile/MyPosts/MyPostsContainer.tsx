@@ -5,16 +5,15 @@ import {connect} from "react-redux";
 import {ReduxStateType} from "../../../redux/redux-store";
 import {Dispatch} from "redux";
 
-
 type mapStateToPropsType = {
     posts: Array<PostType>
     newPostText: string
 }
-
 type mapDispatchToPropsType = {
     addPost: () => void
     updateNewPostText: (text: string) => void
 }
+export type MyPostsPropsType = mapStateToPropsType & mapDispatchToPropsType
 
 const mapStateToProps = (state: ReduxStateType): mapStateToPropsType => {
     return {
@@ -25,12 +24,8 @@ const mapStateToProps = (state: ReduxStateType): mapStateToPropsType => {
 
 const mapDispatchToProps = (dispatch: Dispatch): mapDispatchToPropsType => {
     return {
-        addPost: () => {
-            dispatch(addPostCreator())
-        },
-        updateNewPostText: (text: string) => {
-            dispatch(updateNewPostTextCreator(text))
-        }
+        addPost: () => dispatch(addPostCreator()),
+        updateNewPostText: (text: string) => dispatch(updateNewPostTextCreator(text))
     }
 }
 
