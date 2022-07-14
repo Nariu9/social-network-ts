@@ -25,4 +25,8 @@ const rootReducer = combineReducers({   //один большой редьюсе
 
 const store: ReduxStoreType = createStore(rootReducer)     //возможно типизация store излишня
 
+//@ts-ignore
+window.store=store
+
+
 export default store
