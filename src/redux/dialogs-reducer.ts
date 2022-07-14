@@ -10,11 +10,13 @@ export type MessageType = {
     message: string
 }
 
-export type DialogsPageStateType = {
+export type DialogsPageStateType = {      //первый вариант типизации
     dialogs: Array<DialogType>
     messages: Array<MessageType>
     newMessageText: string
 }
+
+//export type DialogsPageStateType = typeof initialState  //второй вариант типизации
 
 const ADD_MESSAGE = 'ADD-MESSAGE';
 const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT';
@@ -27,7 +29,7 @@ const initialState: DialogsPageStateType = {
         {id: 4, name: 'Sasha'},
         {id: 5, name: 'Viktor'},
         {id: 6, name: 'Masha'}
-    ],
+    ] /*as DialogType[]*/,              //уточнение для второго варианта типизации
     messages: [
         {id: 1, message: 'Hi'},
         {id: 2, message: 'Ho'},
@@ -35,23 +37,16 @@ const initialState: DialogsPageStateType = {
         {id: 4, message: 'Hi'},
         {id: 5, message: 'Hi'},
         {id: 6, message: 'Hi'}
-    ],
+    ] /*as MessageType[]*/,             //уточнение для второго варианта типизации
     newMessageText: 'Hi dude'
 }
 
-export const dialogsReducer = (state = initialState, action: ActionType): DialogsPageStateType => {
+export const dialogsReducer = (state: DialogsPageStateType = initialState, action: ActionType): DialogsPageStateType => {
     switch (action.type) {
         case ADD_MESSAGE:
-            const newMessage: MessageType = {
-                id: 7,
-                message: state.newMessageText
-            }
-            state.messages.push(newMessage)
-            state.newMessageText = ''
-            return state;
+            return {...state, messages: [...state.messages, {id: 7, message: state.newMessageText}], newMessageText: ''}
         case UPDATE_NEW_MESSAGE_TEXT:
-            state.newMessageText = action.newMessageText
-            return state;
+            return {...state, newMessageText: action.newMessageText}
         default:
             return state;
     }
