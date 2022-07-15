@@ -1,7 +1,5 @@
-import {ActionType} from "./store";
-
 const initialState = {}
 
-export const sidebarReducer = (state = initialState, action: ActionType) => {
+export const sidebarReducer = (state = initialState, action: any) => {
     return state;
 }

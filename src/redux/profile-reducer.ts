@@ -1,6 +1,3 @@
-import {ActionType} from "./store";
-
-
 export type PostType = {
     id: number
     message: string
@@ -25,7 +22,7 @@ const initialState: ProfilePageStateType = {
     newPostText: 'Hallo!'
 }
 
-export const profileReducer = (state: ProfilePageStateType = initialState, action: ActionType): ProfilePageStateType => {
+export const profileReducer = (state: ProfilePageStateType = initialState, action: ProfileActionType): ProfilePageStateType => {
     switch (action.type) {
         case ADD_POST:
             return {
@@ -39,6 +36,9 @@ export const profileReducer = (state: ProfilePageStateType = initialState, actio
             return state;
     }
 }
+
+export type ProfileActionType = ReturnType<typeof addPostCreator>
+    | ReturnType<typeof updateNewPostTextCreator>
 
 export const addPostCreator = () => ({type: ADD_POST}) as const
 export const updateNewPostTextCreator = (newPostText: string) => ({
