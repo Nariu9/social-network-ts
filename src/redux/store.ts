@@ -2,15 +2,16 @@ import {addPostCreator, profileReducer, updateNewPostTextCreator} from "./profil
 import {addMessageCreator, dialogsReducer, updateNewMessageTextCreator} from "./dialogs-reducer";
 import {sidebarReducer} from "./sidebar-reducer";
 
-export type StoreType = {
+type StoreType = {
     _state: StateType
     _callSubscriber: (state: StateType) => void
     subscribe: (observer: (state: StateType) => void) => void
     getState: () => StateType
-    dispatch: (action: ActionType) => void
+    dispatch: (action: any) => void
+    //dispatch: (action: ActionType) => void    //ошибка появилась после того как вынес типы экшенов в редьюсеры, пришлось поставить any
 }
 
-export type StateType = {
+type StateType = {
     profilePage: ProfilePageStateType
     dialogsPage: DialogsPageStateType
     sidebar:{}
@@ -43,7 +44,7 @@ type MessagePropsType = {
     message: string
 }
 
-export type ActionType =
+type ActionType =
     ReturnType<typeof addPostCreator>
     | ReturnType<typeof updateNewPostTextCreator>
     | ReturnType<typeof addMessageCreator>
