@@ -4,11 +4,14 @@ export type LocationType = {
 }
 export type UserType = {
     id: number
-    photoUrl: string
+    photos: {
+        small: string
+        large: string
+    }
     followed: boolean
-    fullName: string
+    name: string
     status: string
-    location: LocationType
+    location?: LocationType
 }
 export type UsersPageStateType = {
     users: UserType[]
@@ -35,7 +38,10 @@ export const usersReducer = (state: UsersPageStateType = initialState, action: U
     }
 }
 
-export type UsersActionsType = ReturnType<typeof followAC> | ReturnType<typeof unfollowAC> | ReturnType<typeof setUsersAC>
+export type UsersActionsType =
+    ReturnType<typeof followAC>
+    | ReturnType<typeof unfollowAC>
+    | ReturnType<typeof setUsersAC>
 
 export const followAC = (userID: number) => ({type: FOLLOW, userID}) as const
 export const unfollowAC = (userID: number) => ({type: UNFOLLOW, userID}) as const
