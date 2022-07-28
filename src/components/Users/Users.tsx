@@ -1,8 +1,8 @@
 import React from 'react';
-import {UsersPropsType} from "./UsersContainer";
-import classes from "./Users.module.css";
-import axios from "axios";
-import userPhoto from "../../assets/images/userPhoto.jpg"
+import {UsersPropsType} from './UsersContainer';
+import classes from './Users.module.css';
+import axios from 'axios';
+import userPhoto from '../../assets/images/userPhoto.jpg'
 
 /*props.setUsers([
            {
@@ -35,16 +35,27 @@ class Users extends React.Component<UsersPropsType> {
 
     componentDidMount() {
         if (this.props.users.length === 0) {
-            axios.get("https://social-network.samuraijs.com/api/1.0/users").then(response => {
+            axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
                 this.props.setUsers(response.data.items)
             });
         }
     }
 
     render() {
+
+        let pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize)
+        let pages = []
+        for (let i = 1; i <= pagesCount; i++) {
+            pages.push(i)
+        }
+
         return (
-            <div>{
-                this.props.users.map(u => <div key={u.id}>
+            <div>
+                <div>
+                    {pages.map(p=><span key={p} className={this.props.currentPage === p ? classes.selectedPage: ''}>{p}</span>)}
+                </div>
+                {
+                    this.props.users.map(u => <div key={u.id}>
                     <span>
                         <div>
                             <img
@@ -57,7 +68,7 @@ class Users extends React.Component<UsersPropsType> {
                                 : <button onClick={() => this.props.follow(u.id)}>Follow</button>}
                         </div>
                     </span>
-                    <span>
+                        <span>
                         <span>
                             <div>{u.name}</div>
                             <div>{u.status}</div>
@@ -67,8 +78,8 @@ class Users extends React.Component<UsersPropsType> {
                             <div>{'u.location.city'}</div>
                         </span>
                     </span>
-                </div>)
-            }</div>
+                    </div>)
+                }</div>
         );
     }
 }
