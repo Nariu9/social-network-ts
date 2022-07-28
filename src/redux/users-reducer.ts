@@ -15,6 +15,9 @@ export type UserType = {
 }
 export type UsersPageStateType = {
     users: UserType[]
+    pageSize: number
+    totalUsersCount: number
+    currentPage: number
 }
 
 const FOLLOW = 'FOLLOW';
@@ -22,7 +25,10 @@ const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
 
 const initialState: UsersPageStateType = {
-    users: []
+    users: [],
+    pageSize: 5,
+    totalUsersCount: 21,
+    currentPage: 2
 }
 
 export const usersReducer = (state: UsersPageStateType = initialState, action: UsersActionsType): UsersPageStateType => {
