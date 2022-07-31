@@ -1,8 +1,8 @@
-import {combineReducers, createStore} from "redux";
-import {profileReducer} from "./profile-reducer";
-import {dialogsReducer} from "./dialogs-reducer";
-import {sidebarReducer} from "./sidebar-reducer";
-import {usersReducer} from "./users-reducer";
+import {combineReducers, createStore} from 'redux';
+import {profileReducer} from './profile-reducer';
+import {dialogsReducer} from './dialogs-reducer';
+import {sidebarReducer} from './sidebar-reducer';
+import {usersReducer} from './users-reducer';
 
 /*export type ReduxStoreType = Store<EmptyObject & { profilePage: ProfilePagePropsType; dialogsPage: DialogsPagePropsType; sidebar: {}; }, any>*/
 //типизация из подсказки TS при передаче store в App в файле index.tsx
@@ -27,7 +27,7 @@ const rootReducer = combineReducers({   //один большой редьюсе
 const store = createStore(rootReducer)     //возможно типизация store излишня
 
 //@ts-ignore
-window.store=store
+window.store = store
 
 
 export default store
