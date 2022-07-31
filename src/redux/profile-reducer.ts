@@ -6,22 +6,22 @@ export type PostType = {
 export type ProfileType = {
     aboutMe: string
     contacts: {
-        facebook: string | null
-        website: string | null
-        vk: string | null
-        twitter: string | null
-        instagram: string | null
-        youtube: string | null
-        github: string | null
-        mainLink: string | null
+        facebook: string
+        website: string
+        vk: string
+        twitter: string
+        instagram: string
+        youtube: string
+        github: string
+        mainLink: string
     }
     lookingForAJob: boolean
-    lookingForAJobDescription: string | null
-    fullName: string | null
+    lookingForAJobDescription: string
+    fullName: string
     userId: number
     photos: {
-        small: string | null
-        large: string | null
+        small: string
+        large: string
     }
 }
 export type ProfilePageStateType = {
