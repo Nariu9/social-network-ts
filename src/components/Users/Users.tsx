@@ -3,6 +3,7 @@ import React from 'react';
 import classes from './Users.module.css';
 import userPhoto from '../../assets/images/userPhoto.jpg';
 import {NavLink} from 'react-router-dom';
+import axios from 'axios';
 
 type UsersPropsType = {
     totalUsersCount: number
@@ -38,8 +39,31 @@ export const Users: React.FC<UsersPropsType> = (props) => {
                         </div>
                         <div>
                             {u.followed
-                                ? <button onClick={() => props.unfollow(u.id)}>Unfollow</button>
-                                : <button onClick={() => props.follow(u.id)}>Follow</button>}
+                                ? <button onClick={() => {
+                                    axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {
+                                        withCredentials: true, headers: {
+                                            'API-KEY': '219ce503-db19-4440-86cc-f93419479856'
+                                        }
+                                    })
+                                        .then(response => {
+                                            if (response.data.resultCode === 0) {
+                                                props.unfollow(u.id)
+                                            }
+                                        });
+                                }}>Unfollow</button>
+                                : <button onClick={() => {
+
+                                    axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {}, {
+                                        withCredentials: true, headers: {
+                                            'API-KEY': '219ce503-db19-4440-86cc-f93419479856'
+                                        }
+                                    })
+                                        .then(response => {
+                                            if (response.data.resultCode === 0) {
+                                                props.follow(u.id)
+                                            }
+                                        });
+                                }}>Follow</button>}
                         </div>
                     </span>
                 <span>
