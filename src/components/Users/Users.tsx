@@ -3,7 +3,6 @@ import React from 'react';
 import classes from './Users.module.css';
 import userPhoto from '../../assets/images/userPhoto.jpg';
 import {NavLink} from 'react-router-dom';
-import {usersAPI} from '../../api/api';
 
 type UsersPropsType = {
     totalUsersCount: number
@@ -11,10 +10,9 @@ type UsersPropsType = {
     currentPage: number
     users: UserType[]
     onPageChanged: (page: number) => void
-    follow: (id: number) => void
-    unfollow: (id: number) => void
-    toggleFollowingProgress: (inProgress: boolean, userID: number) => void
     followingInProgress: Array<number>
+    followThunkCreator: (userId: number) => void
+    unfollowThunkCreator: (userId: number) => void
 }
 export const Users: React.FC<UsersPropsType> = (props) => {
 
@@ -42,18 +40,10 @@ export const Users: React.FC<UsersPropsType> = (props) => {
                         <div>
                             {u.followed
                                 ? <button disabled={props.followingInProgress.includes(u.id)} onClick={() => {
-                                    props.toggleFollowingProgress(true, u.id)
-                                    usersAPI.unfollowUser(u.id).then(data => {
-                                        if (data.resultCode === 0) props.unfollow(u.id)
-                                        props.toggleFollowingProgress(false, u.id)
-                                    });
+                                    props.unfollowThunkCreator(u.id)
                                 }}>Unfollow</button>
                                 : <button disabled={props.followingInProgress.includes(u.id)} onClick={() => {
-                                    props.toggleFollowingProgress(true, u.id)
-                                    usersAPI.followUser(u.id).then(data => {
-                                        if (data.resultCode === 0) props.follow(u.id)
-                                        props.toggleFollowingProgress(false, u.id)
-                                    });
+                                    props.followThunkCreator(u.id)
                                 }}>Follow</button>}
                         </div>
                     </span>
