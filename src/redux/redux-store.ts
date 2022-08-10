@@ -1,4 +1,5 @@
-import {combineReducers, compose, createStore} from 'redux';
+import {applyMiddleware, combineReducers, compose, createStore} from 'redux';
+import thunk from 'redux-thunk';
 import {profileReducer} from './profile-reducer';
 import {dialogsReducer} from './dialogs-reducer';
 import {sidebarReducer} from './sidebar-reducer';
@@ -27,7 +28,7 @@ const rootReducer = combineReducers({   //один большой редьюсе
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(rootReducer, composeEnhancers())
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)))
 
 //@ts-ignore
 window.store = store
