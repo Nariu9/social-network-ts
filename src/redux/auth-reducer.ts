@@ -1,3 +1,6 @@
+import {Dispatch} from 'redux';
+import {usersAPI} from '../api/api';
+
 const SET_USER_DATA = 'SET_USER_DATA';
 
 export type AuthStateType = {
@@ -32,3 +35,14 @@ export const setAuthUserData = (userId: number, login: string, email: string) =>
     type: SET_USER_DATA,
     data: {userId, login, email}
 }) as const
+
+export const authThunkCreator = () => {
+    return (dispatch: Dispatch) => {
+        usersAPI.getAuth().then(data => {
+            if (data.resultCode === 0) {
+                const {id, login, email} = data.data
+                dispatch(setAuthUserData(id, login, email))
+            }
+        });
+    }
+}
