@@ -8,6 +8,8 @@ import {
 import {ReduxStateType} from '../../redux/redux-store';
 import {Users} from './Users';
 import {Preloader} from '../common/Preloader/Preloader';
+import {compose} from 'redux';
+import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 
 
 type mapStateToPropsType = {
@@ -65,9 +67,12 @@ const mapStateToProps = (state: ReduxStateType): mapStateToPropsType => {
     }
 }
 
-export default connect(mapStateToProps, {
-    setCurrentPage,
-    getUsersThunkCreator,
-    followThunkCreator,
-    unfollowThunkCreator
-})(UsersContainer);
+export default compose<React.ComponentType>(
+    connect(mapStateToProps, {
+        setCurrentPage,
+        getUsersThunkCreator,
+        followThunkCreator,
+        unfollowThunkCreator
+    }),
+    withAuthRedirect
+)(UsersContainer)
