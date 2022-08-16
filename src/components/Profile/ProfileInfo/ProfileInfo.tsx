@@ -3,6 +3,7 @@ import classes from './ProfileInfo.module.css';
 import {ProfileType} from '../../../redux/profile-reducer';
 import userPhoto from '../../../assets/images/userPhoto.jpg'
 import {Preloader} from '../../common/Preloader/Preloader';
+import {ProfileStatus} from './ProfileStatus';
 
 type ProfileInfoPropsType = {
     profile: null | ProfileType
@@ -15,11 +16,12 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
 
     return (
         <div>
-            <div>
+            {/*<div>
                 <img src="https://cdn.pixabay.com/photo/2017/08/22/00/38/meadow-2667461_960_720.jpg" alt="bg"/>
-            </div>
+            </div>*/}
             <div className={classes.descriptionBlock}>
                 <img src={props.profile.photos.large ? props.profile.photos.large : userPhoto} alt="user"/>
+                <ProfileStatus status={'Hello my friends'}/>
                 <div>Hi, my name is {props.profile.fullName}</div>
                 <div>{props.profile.aboutMe}</div>
                 <div>Contacts:
