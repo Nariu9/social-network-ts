@@ -41,5 +41,5 @@ const mapStateToProps = (state: ReduxStateType): mapStateToPropsType => ({
 export default compose<React.ComponentType>(
     connect(mapStateToProps, {getUserProfileThunkCreator}),
     withRouter,
-    withAuthRedirect
+    //withAuthRedirect
 )(ProfileContainer)
