@@ -1,7 +1,12 @@
 import React from 'react';
 import Profile from './Profile';
 import {connect} from 'react-redux';
-import {getUserProfileThunkCreator, ProfileType,} from '../../redux/profile-reducer';
+import {
+    getUserProfileThunkCreator,
+    getUserStatusThunkCreator,
+    ProfileType,
+    updateUserStatusThunkCreator,
+} from '../../redux/profile-reducer';
 import {ReduxStateType} from '../../redux/redux-store';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
@@ -12,20 +17,24 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
 
     componentDidMount() {
         let userId = this.props.match.params.userId
-        if (!userId) userId = '2'
+        if (!userId) userId = '24944'
         this.props.getUserProfileThunkCreator(userId)
+        this.props.getUserStatusThunkCreator(userId)
     }
 
     render() {
-        return <Profile profile={this.props.profile}/>
+        return <Profile profile={this.props.profile} status={this.props.status} updateStatus={this.props.updateUserStatusThunkCreator}/>
     }
 }
 
 type mapStateToPropsType = {
     profile: null | ProfileType
+    status: string
 }
 type mapDispatchToPropsType = {
     getUserProfileThunkCreator: (userId: string) => void
+    getUserStatusThunkCreator: (userId: string) => void
+    updateUserStatusThunkCreator: (status: string) => void
 }
 type PropsFromConnectType = mapDispatchToPropsType & mapStateToPropsType
 
@@ -36,10 +45,16 @@ type ProfileContainerPropsType = RouteComponentProps<PathParamsType> & PropsFrom
 
 const mapStateToProps = (state: ReduxStateType): mapStateToPropsType => ({
     profile: state.profilePage.profile,
+    status: state.profilePage.status
 })
 
 export default compose<React.ComponentType>(
-    connect(mapStateToProps, {getUserProfileThunkCreator}),
+    connect(mapStateToProps,
+        {
+            getUserProfileThunkCreator,
+            getUserStatusThunkCreator,
+            updateUserStatusThunkCreator
+        }),
     withRouter,
     //withAuthRedirect
 )(ProfileContainer)
