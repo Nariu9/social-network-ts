@@ -5,6 +5,7 @@ import {dialogsReducer} from './dialogs-reducer';
 import {sidebarReducer} from './sidebar-reducer';
 import {usersReducer} from './users-reducer';
 import {authReducer} from './auth-reducer';
+import { reducer as formReducer } from 'redux-form'
 
 //export type ActionType = ProfileActionType | DialogsActionsType | UsersActionsType    //типизация экшенов, возможно излишня
 //export type ReduxStoreType = Store<ReduxStateType, ActionType>                        //типизация ReduxStore, возможно излишня
@@ -24,7 +25,8 @@ const rootReducer = combineReducers({   //один большой редьюсе
     dialogsPage: dialogsReducer,
     usersPage: usersReducer,
     sidebar: sidebarReducer,
-    auth: authReducer
+    auth: authReducer,
+    form: formReducer
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
