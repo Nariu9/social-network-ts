@@ -28,11 +28,19 @@ export class ProfileStatus extends React.Component<ProfileStatusPropsType> {
         })
     }
 
+    componentDidUpdate(prevProps: Readonly<ProfileStatusPropsType>, prevState: Readonly<{ editMode: boolean, updateStatus: string }>) {
+        if (prevProps.status !== this.props.status) {
+            this.setState({
+                status: this.props.status
+            })
+        }
+    }
+
     render() {
         return <>
             {!this.state.editMode && <div style={{fontWeight: 'bold'}}>
                 <span onDoubleClick={this.activateEditMode}>
-                    {this.props.status || '--------'}
+                    {this.state.status || '--------'}
                 </span>
             </div>}
             {this.state.editMode && <div>
