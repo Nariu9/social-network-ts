@@ -1,18 +1,11 @@
-import {applyMiddleware, combineReducers, compose, createStore} from 'redux';
-import thunk from 'redux-thunk';
+import {AnyAction, applyMiddleware, combineReducers, compose, createStore} from 'redux';
+import thunk, {ThunkAction} from 'redux-thunk';
 import {profileReducer} from './profile-reducer';
 import {dialogsReducer} from './dialogs-reducer';
 import {sidebarReducer} from './sidebar-reducer';
 import {usersReducer} from './users-reducer';
 import {authReducer} from './auth-reducer';
-import { reducer as formReducer } from 'redux-form'
-
-//export type ActionType = ProfileActionType | DialogsActionsType | UsersActionsType    //типизация экшенов, возможно излишня
-//export type ReduxStoreType = Store<ReduxStateType, ActionType>                        //типизация ReduxStore, возможно излишня
-//export type ReduxStateType = ReturnType<RootState> // ReturnType что функция возвращает
-//export type RootState = typeof rootReducer;  // типизация функции combineReducers
-
-export type ReduxStateType = ReturnType<typeof rootReducer>  //короткая запись строк 10-11
+import {reducer as formReducer} from 'redux-form'
 
 declare global {
     interface Window {
@@ -20,7 +13,7 @@ declare global {
     }
 }
 
-const rootReducer = combineReducers({   //один большой редьюсер
+const rootReducer = combineReducers({
     profilePage: profileReducer,
     dialogsPage: dialogsReducer,
     usersPage: usersReducer,
@@ -32,8 +25,11 @@ const rootReducer = combineReducers({   //один большой редьюсе
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)))
 
+export type RootState = ReturnType<typeof store.getState>
+
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, AnyAction>
+
 //@ts-ignore
 window.store = store
-
 
 export default store
