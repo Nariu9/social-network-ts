@@ -1,5 +1,5 @@
-import {addPostCreator, profileReducer, updateNewPostTextCreator} from "./profile-reducer";
-import {addMessageCreator, dialogsReducer, updateNewMessageTextCreator} from "./dialogs-reducer";
+// import {addPostCreator, profileReducer, updateNewPostTextCreator} from "./profile-reducer"; закомментил на 76 уроке
+// import {addMessageCreator, dialogsReducer, updateNewMessageTextCreator} from "./dialogs-reducer";
 import {sidebarReducer} from "./sidebar-reducer";
 
 type StoreType = {
@@ -44,11 +44,11 @@ type MessagePropsType = {
     message: string
 }
 
-type ActionType =
+/*type ActionType = закомментил на 76 уроке
     ReturnType<typeof addPostCreator>
     | ReturnType<typeof updateNewPostTextCreator>
     | ReturnType<typeof addMessageCreator>
-    | ReturnType<typeof updateNewMessageTextCreator>
+    | ReturnType<typeof updateNewMessageTextCreator> */
 
 let store: StoreType = {
     _state: {
@@ -96,7 +96,7 @@ let store: StoreType = {
     dispatch(action) {
         // @ts-ignore
         this._state.profilePage = profileReducer(this._state.profilePage, action)
-        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+        // this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action) закомментил на 76 уроке
         this._state.sidebar = sidebarReducer(this._state.sidebar, action)
 
         this._callSubscriber(this._state)
