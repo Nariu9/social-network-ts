@@ -7,7 +7,7 @@ import {
     ProfileType,
     updateUserStatusThunkCreator,
 } from '../../redux/profile-reducer';
-import {ReduxStateType} from '../../redux/redux-store';
+import {RootState} from '../../redux/redux-store';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {compose} from 'redux';
@@ -43,7 +43,7 @@ type PathParamsType = {
 }
 type ProfileContainerPropsType = RouteComponentProps<PathParamsType> & PropsFromConnectType
 
-const mapStateToProps = (state: ReduxStateType): mapStateToPropsType => ({
+const mapStateToProps = (state: RootState): mapStateToPropsType => ({
     profile: state.profilePage.profile,
     status: state.profilePage.status
 })
@@ -56,5 +56,5 @@ export default compose<React.ComponentType>(
             updateUserStatusThunkCreator
         }),
     withRouter,
-    //withAuthRedirect
+    withAuthRedirect
 )(ProfileContainer)

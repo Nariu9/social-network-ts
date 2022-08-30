@@ -5,7 +5,7 @@ import {
     setCurrentPage, unfollowThunkCreator,
     UserType
 } from '../../redux/users-reducer';
-import {ReduxStateType} from '../../redux/redux-store';
+import {RootState} from '../../redux/redux-store';
 import {Users} from './Users';
 import {Preloader} from '../common/Preloader/Preloader';
 import {compose} from 'redux';
@@ -56,7 +56,7 @@ class UsersContainer extends React.Component<UsersContainerPropsType> {
     }
 }
 
-const mapStateToProps = (state: ReduxStateType): mapStateToPropsType => {
+const mapStateToProps = (state: RootState): mapStateToPropsType => {
     return {
         users: state.usersPage.users,
         pageSize: state.usersPage.pageSize,

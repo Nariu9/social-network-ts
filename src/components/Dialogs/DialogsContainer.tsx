@@ -1,7 +1,7 @@
 import {addMessageCreator, DialogsPageStateType} from '../../redux/dialogs-reducer';
 import Dialogs from './Dialogs';
 import {connect} from 'react-redux';
-import {ReduxStateType} from '../../redux/redux-store';
+import {RootState} from '../../redux/redux-store';
 import {compose, Dispatch} from 'redux';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 import React from 'react';
@@ -14,7 +14,7 @@ type mapDispatchToPropsType = {
 }
 export type DialogsPropsType = mapStateToPropsType & mapDispatchToPropsType
 
-const mapStateToProps = (state: ReduxStateType): mapStateToPropsType => {
+const mapStateToProps = (state: RootState): mapStateToPropsType => {
     return {
         dialogsPage: state.dialogsPage,
     }
