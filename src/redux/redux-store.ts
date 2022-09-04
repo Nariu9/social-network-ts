@@ -6,6 +6,7 @@ import {sidebarReducer} from './sidebar-reducer';
 import {usersReducer} from './users-reducer';
 import {authReducer} from './auth-reducer';
 import {reducer as formReducer} from 'redux-form'
+import {appReducer} from './app-reducer';
 
 declare global {
     interface Window {
@@ -19,13 +20,14 @@ const rootReducer = combineReducers({
     usersPage: usersReducer,
     sidebar: sidebarReducer,
     auth: authReducer,
-    form: formReducer
+    form: formReducer,
+    app: appReducer
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)))
 
-export type RootState = ReturnType<typeof store.getState>
+export type RootState = ReturnType<typeof rootReducer>
 
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, AnyAction>
 
