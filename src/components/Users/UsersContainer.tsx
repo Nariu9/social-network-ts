@@ -9,7 +9,7 @@ import {RootState} from '../../redux/redux-store';
 import {Users} from './Users';
 import {Preloader} from '../common/Preloader/Preloader';
 import {compose} from 'redux';
-import {withAuthRedirect} from '../../hoc/withAuthRedirect';
+// import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 
 
 type mapStateToPropsType = {
@@ -74,5 +74,5 @@ export default compose<React.ComponentType>(
         followThunkCreator,
         unfollowThunkCreator
     }),
-    withAuthRedirect
+    // withAuthRedirect
 )(UsersContainer)
