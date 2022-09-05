@@ -32,9 +32,9 @@ export type AuthActionsType =
     ReturnType<typeof setAuthUserData>
 
 
-export const setAuthUserData = (userId: number | null, login: string | null, email: string | null, isAuth: boolean) => ({
+export const setAuthUserData = (id: number | null, login: string | null, email: string | null, isAuth: boolean) => ({
     type: SET_USER_DATA,
-    payload: {userId, login, email, isAuth}
+    payload: {id, login, email, isAuth}
 }) as const
 
 export const getAuthDataThunkCreator = (): AppThunk => (dispatch) => {
