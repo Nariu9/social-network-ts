@@ -72,13 +72,13 @@ export const addPostCreator = (newPost: string) => ({type: ADD_POST, newPost}) a
 export const setUserProfile = (profile: ProfileType) => ({type: SET_USER_PROFILE, profile}) as const
 export const setUserStatus = (status: string) => ({type: SET_STATUS, status}) as const
 
-export const getUserProfileThunkCreator = (userId: string): AppThunk => (dispatch) => {
+export const getUserProfileThunkCreator = (userId: number): AppThunk => (dispatch) => {
     usersAPI.getProfile(userId).then(data => {
         dispatch(setUserProfile(data))
     });
 }
 
-export const getUserStatusThunkCreator = (userId: string): AppThunk => (dispatch) => {
+export const getUserStatusThunkCreator = (userId: number): AppThunk => (dispatch) => {
     profileAPI.getStatus(userId).then(data => {
         dispatch(setUserStatus(data))
     });
