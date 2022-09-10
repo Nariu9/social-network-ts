@@ -7,7 +7,7 @@ const initialState = {
     initialized: false
 }
 
-type AppStateType = typeof initialState
+export type AppStateType = typeof initialState
 
 export const appReducer = (state: AppStateType = initialState, action: AppActionsType): AppStateType => {
     switch (action.type) {
