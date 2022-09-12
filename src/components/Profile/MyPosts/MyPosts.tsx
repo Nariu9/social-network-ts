@@ -8,9 +8,10 @@ import {FormControl} from '../../common/FormsControls/FormsControls';
 
 const maxLength10 = maxLengthCreator(10)
 
-const MyPosts = (props: MyPostsPropsType) => {
-
-    let postsElements = props.posts.map(p => <Post key={p.id} id={p.id} message={p.message} likesCount={p.likesCount}/>)
+const MyPosts = React.memo((props: MyPostsPropsType) => {
+    console.log('MyPosts rendering')
+    let postsElements = props.posts.map(p => <Post key={p.id} id={p.id} message={p.message}
+                                                   likesCount={p.likesCount}/>)
 
     const addNewPost = (formData: FormDataType) => {
         props.addPost(formData.newPostText)
@@ -25,7 +26,7 @@ const MyPosts = (props: MyPostsPropsType) => {
             </div>
         </div>
     )
-}
+});
 
 export default MyPosts
 
