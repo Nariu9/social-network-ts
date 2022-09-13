@@ -36,6 +36,7 @@ export type ProfilePageStateType = {
 const ADD_POST = 'ADD-POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_STATUS = 'SET_STATUS';
+const DELETE_POST = 'DELETE_POST';
 
 const initialState: ProfilePageStateType = {
     posts: [
@@ -59,6 +60,8 @@ export const profileReducer = (state: ProfilePageStateType = initialState, actio
             return {...state, profile: action.profile}
         case SET_STATUS:
             return {...state, status: action.status}
+        case DELETE_POST:
+            return {...state, posts: state.posts.filter(p => p.id !== action.postId)}
         default:
             return state;
     }
@@ -67,10 +70,12 @@ export const profileReducer = (state: ProfilePageStateType = initialState, actio
 export type ProfileActionType = ReturnType<typeof addPostCreator>
     | ReturnType<typeof setUserProfile>
     | ReturnType<typeof setUserStatus>
+    | ReturnType<typeof deletePostAC>
 
 export const addPostCreator = (newPost: string) => ({type: ADD_POST, newPost}) as const
 export const setUserProfile = (profile: ProfileType) => ({type: SET_USER_PROFILE, profile}) as const
 export const setUserStatus = (status: string) => ({type: SET_STATUS, status}) as const
+export const deletePostAC = (postId: number) => ({type: DELETE_POST, postId} as const)
 
 export const getUserProfileThunkCreator = (userId: number): AppThunk => (dispatch) => {
     profileAPI.getProfile(userId).then(data => {
