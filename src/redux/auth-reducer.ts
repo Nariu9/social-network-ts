@@ -2,16 +2,6 @@ import {authAPI} from '../api/api';
 import {AppThunk} from './redux-store';
 import {stopSubmit} from 'redux-form';
 
-const SET_USER_DATA = 'SET_USER_DATA';
-
-export type AuthStateType = {
-    id: number | null
-    login: string | null
-    email: string | null
-    isAuth: boolean
-}
-
-
 const initialState: AuthStateType = {
     id: null,
     login: null,
@@ -28,39 +18,47 @@ export const authReducer = (state: AuthStateType = initialState, action: AuthAct
     }
 }
 
-export type AuthActionsType =
-    ReturnType<typeof setAuthUserData>
-
-
+// action creators
 export const setAuthUserData = (id: number | null, login: string | null, email: string | null, isAuth: boolean) => ({
     type: SET_USER_DATA,
     payload: {id, login, email, isAuth}
-}) as const
+} as const)
 
-export const getAuthDataThunkCreator = (): AppThunk => (dispatch) => {
-    return authAPI.getMe().then(data => {
-        if (data.resultCode === 0) {
-            const {id, login, email} = data.data
-            dispatch(setAuthUserData(id, login, email, true))
-        }
-    });
+// thunk creators
+export const getAuthDataThunkCreator = (): AppThunk => async (dispatch) => {
+    const res = await authAPI.getMe()
+    if (res.resultCode === 0) {
+        const {id, login, email} = res.data
+        dispatch(setAuthUserData(id, login, email, true))
+    }
 }
 
-export const loginTC = (email: string, password: string, rememberMe: boolean): AppThunk => (dispatch) => {
-    authAPI.login(email, password, rememberMe).then(data => {
-        if (data.resultCode === 0) {
-            dispatch(getAuthDataThunkCreator())
-        } else {
-            const message = data.messages.length > 0 ? data.messages[0] : 'An error has occurred'
-            dispatch(stopSubmit('login', {_error: message}))
-        }
-    });
+export const loginTC = (email: string, password: string, rememberMe: boolean): AppThunk => async (dispatch) => {
+    const res = await authAPI.login(email, password, rememberMe)
+    if (res.resultCode === 0) {
+        dispatch(getAuthDataThunkCreator())
+    } else {
+        const message = res.messages.length > 0 ? res.messages[0] : 'An error has occurred'
+        dispatch(stopSubmit('login', {_error: message}))
+    }
 }
 
-export const logoutTC = (): AppThunk => (dispatch) => {
-    authAPI.logout().then(data => {
-        if (data.resultCode === 0) {
-            dispatch(setAuthUserData(null, null, null, false))
-        }
-    });
+export const logoutTC = (): AppThunk => async (dispatch) => {
+    const res = await authAPI.logout()
+    if (res.resultCode === 0) {
+        dispatch(setAuthUserData(null, null, null, false))
+    }
 }
+
+// types
+export type AuthStateType = {
+    id: number | null
+    login: string | null
+    email: string | null
+    isAuth: boolean
+}
+
+const SET_USER_DATA = 'auth/SET_USER_DATA';
+
+export type AuthActionsType =
+    ReturnType<typeof setAuthUserData>
