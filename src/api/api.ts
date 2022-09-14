@@ -13,10 +13,10 @@ export const usersAPI = {
         return instance.get(`users?page=${currentPage}&count=${pageSize}`).then(response => response.data)
     },
     followUser(userId: number) {
-        return instance.post(`follow/${userId}`).then(response => response.data)
+        return instance.post<ResponseType>(`follow/${userId}`).then(response => response.data)
     },
     unfollowUser(userId: number) {
-        return instance.delete(`follow/${userId}`).then(response => response.data)
+        return instance.delete<ResponseType>(`follow/${userId}`).then(response => response.data)
     }
 }
 
@@ -37,18 +37,22 @@ export const authAPI = {
         return instance.get(`auth/me`).then(response => response.data)
     },
     login(email: string, password: string, rememberMe: boolean = false) {
-        return instance.post<LoginResponseType>(`auth/login`, {email, password, rememberMe}).then(response => response.data)
+        return instance.post<ResponseType<{ userId: number }>>(`auth/login`, {
+            email,
+            password,
+            rememberMe
+        }).then(response => response.data)
     },
     logout() {
         return instance.delete(`auth/login`).then(response => response.data)
     }
 }
 
-export type LoginResponseType = {
-	data: {
-        userId: number
-    }
-	messages: string[]
-	fieldsErrors: string[]
-	resultCode: number
+export type FollowUnfollowAPIMethodsType = typeof usersAPI.followUser | typeof usersAPI.unfollowUser
+
+export type ResponseType<T = {}> = {
+    data: T
+    messages: string[]
+    fieldsErrors: string[]
+    resultCode: number
 }
