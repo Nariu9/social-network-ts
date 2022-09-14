@@ -1,22 +1,3 @@
-export type DialogType = {
-    id: number
-    name: string
-}
-
-export type MessageType = {
-    id: number
-    message: string
-}
-
-export type DialogsPageStateType = {      //первый вариант типизации
-    dialogs: Array<DialogType>
-    messages: Array<MessageType>
-}
-
-//export type DialogsPageStateType = typeof initialState  //второй вариант типизации
-
-const ADD_MESSAGE = 'ADD-MESSAGE';
-
 const initialState: DialogsPageStateType = {
     dialogs: [
         {id: 1, name: 'Dimych'},
@@ -45,6 +26,24 @@ export const dialogsReducer = (state: DialogsPageStateType = initialState, actio
     }
 }
 
-export type DialogsActionsType = ReturnType<typeof addMessageCreator>
+// action creators
+export const addMessageCreator = (newMessage: string) => ({type: ADD_MESSAGE, newMessage} as const)
 
-export const addMessageCreator = (newMessage: string) => ({type: ADD_MESSAGE, newMessage}) as const
+// types
+export type DialogType = {
+    id: number
+    name: string
+}
+export type MessageType = {
+    id: number
+    message: string
+}
+export type DialogsPageStateType = {      //первый вариант типизации
+    dialogs: Array<DialogType>
+    messages: Array<MessageType>
+}
+//export type DialogsPageStateType = typeof initialState  //второй вариант типизации
+
+const ADD_MESSAGE = 'dialogs/ADD_MESSAGE';
+
+export type DialogsActionsType = ReturnType<typeof addMessageCreator>
