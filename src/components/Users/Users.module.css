@@ -3,19 +3,3 @@
     width: 100px;
     border-radius: 50%;
 }
-
-.pages {
-    width: 200px;
-    height: 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.pages span {
-    cursor: pointer;
-}
-
-.selectedPage {
-    font-weight: bold;
-}
