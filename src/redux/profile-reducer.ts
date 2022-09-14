@@ -1,6 +1,60 @@
 import {profileAPI} from '../api/api';
 import {AppThunk} from './redux-store';
 
+const initialState: ProfilePageStateType = {
+    posts: [
+        {id: 1, message: 'Hi, how are you?', likesCount: 15},
+        {id: 2, message: 'It\'s my first post', likesCount: 20},
+        {id: 3, message: 'Or it is not?', likesCount: 3},
+        {id: 4, message: 'Hah...', likesCount: 0},
+    ],
+    profile: null,
+    status: ''
+}
+
+export const profileReducer = (state: ProfilePageStateType = initialState, action: ProfileActionType): ProfilePageStateType => {
+    switch (action.type) {
+        case ADD_POST:
+            return {
+                ...state,
+                posts: [...state.posts, {id: 5, message: action.newPost, likesCount: 0}]
+            }
+        case SET_USER_PROFILE:
+            return {...state, profile: action.profile}
+        case SET_STATUS:
+            return {...state, status: action.status}
+        case DELETE_POST:
+            return {...state, posts: state.posts.filter(p => p.id !== action.postId)}
+        default:
+            return state;
+    }
+}
+
+// action creators
+export const addPostCreator = (newPost: string) => ({type: ADD_POST, newPost} as const)
+export const setUserProfile = (profile: ProfileType) => ({type: SET_USER_PROFILE, profile} as const)
+export const setUserStatus = (status: string) => ({type: SET_STATUS, status} as const)
+export const deletePostAC = (postId: number) => ({type: DELETE_POST, postId} as const)
+
+// thunk creators
+export const getUserProfileThunkCreator = (userId: number): AppThunk => async (dispatch) => {
+    const res = await profileAPI.getProfile(userId)
+    dispatch(setUserProfile(res))
+}
+
+export const getUserStatusThunkCreator = (userId: number): AppThunk => async (dispatch) => {
+    const res = await profileAPI.getStatus(userId)
+    dispatch(setUserStatus(res))
+}
+
+export const updateUserStatusThunkCreator = (status: string): AppThunk => async (dispatch) => {
+    const res = await profileAPI.updateStatus(status)
+    if (res.resultCode === 0) {
+        dispatch(setUserStatus(status))
+    }
+}
+
+// types
 export type PostType = {
     id: number
     message: string
@@ -33,66 +87,13 @@ export type ProfilePageStateType = {
     status: string
 }
 
-const ADD_POST = 'ADD-POST';
-const SET_USER_PROFILE = 'SET_USER_PROFILE';
-const SET_STATUS = 'SET_STATUS';
-const DELETE_POST = 'DELETE_POST';
+const ADD_POST = 'profile/ADD_POST';
+const SET_USER_PROFILE = 'profile/SET_USER_PROFILE';
+const SET_STATUS = 'profile/SET_STATUS';
+const DELETE_POST = 'profile/DELETE_POST';
 
-const initialState: ProfilePageStateType = {
-    posts: [
-        {id: 1, message: 'Hi, how are you?', likesCount: 15},
-        {id: 2, message: 'It\'s my first post', likesCount: 20},
-        {id: 3, message: 'Or it is not?', likesCount: 3},
-        {id: 4, message: 'Hah...', likesCount: 0},
-    ],
-    profile: null,
-    status: ''
-}
-
-export const profileReducer = (state: ProfilePageStateType = initialState, action: ProfileActionType): ProfilePageStateType => {
-    switch (action.type) {
-        case ADD_POST:
-            return {
-                ...state,
-                posts: [...state.posts, {id: 5, message: action.newPost, likesCount: 0}]
-            }
-        case SET_USER_PROFILE:
-            return {...state, profile: action.profile}
-        case SET_STATUS:
-            return {...state, status: action.status}
-        case DELETE_POST:
-            return {...state, posts: state.posts.filter(p => p.id !== action.postId)}
-        default:
-            return state;
-    }
-}
-
-export type ProfileActionType = ReturnType<typeof addPostCreator>
+export type ProfileActionType =
+    ReturnType<typeof addPostCreator>
     | ReturnType<typeof setUserProfile>
     | ReturnType<typeof setUserStatus>
     | ReturnType<typeof deletePostAC>
-
-export const addPostCreator = (newPost: string) => ({type: ADD_POST, newPost}) as const
-export const setUserProfile = (profile: ProfileType) => ({type: SET_USER_PROFILE, profile}) as const
-export const setUserStatus = (status: string) => ({type: SET_STATUS, status}) as const
-export const deletePostAC = (postId: number) => ({type: DELETE_POST, postId} as const)
-
-export const getUserProfileThunkCreator = (userId: number): AppThunk => (dispatch) => {
-    profileAPI.getProfile(userId).then(data => {
-        dispatch(setUserProfile(data))
-    });
-}
-
-export const getUserStatusThunkCreator = (userId: number): AppThunk => (dispatch) => {
-    profileAPI.getStatus(userId).then(data => {
-        dispatch(setUserStatus(data))
-    });
-}
-
-export const updateUserStatusThunkCreator = (status: string): AppThunk => (dispatch) => {
-    profileAPI.updateStatus(status).then(data => {
-        if (data.resultCode === 0) {
-            dispatch(setUserStatus(status))
-        }
-    });
-}
