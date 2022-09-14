@@ -1,6 +1,6 @@
 import React from 'react';
-import {Field, InjectedFormProps, reduxForm} from 'redux-form';
-import {FormControl} from '../common/FormsControls/FormsControls';
+import {InjectedFormProps, reduxForm} from 'redux-form';
+import {createField, FormControl} from '../common/FormsControls/FormsControls';
 import {required} from '../../utils/validators/validators';
 import {connect} from 'react-redux';
 import {loginTC} from '../../redux/auth-reducer';
@@ -27,21 +27,25 @@ type FormDataType = {
     rememberMe: boolean
 }
 
-const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
-    return <form onSubmit={props.handleSubmit}>
-        <div>
-            <Field placeholder={'Email'} name={'email'} component={FormControl} validate={[required]}
-                   FieldType={'input'}/>
-        </div>
+const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({handleSubmit, error}) => {
+    return <form onSubmit={handleSubmit}>
+        {createField('Email', 'email', [required], FormControl, 'input')}
+        {createField('Password', 'password', [required], FormControl, 'input', {type: 'password'})}
+        {createField(null, 'rememberMe', [], FormControl, 'input', {type: 'checkbox'}, 'remember me')}
+
+        {/*<div>
+             <Field placeholder={'Email'} name={'email'} component={FormControl} validate={[required]}
+                    FieldType={'input'}/>
+         </div>
         <div>
             <Field placeholder={'Password'} name={'password'} component={FormControl} validate={[required]}
                    type={'password'} FieldType={'input'}/>
         </div>
         <div>
             <Field type={'checkbox'} name={'rememberMe'} component={FormControl} FieldType={'input'}/> remember me
-        </div>
-        {props.error && <div className={classes.formSummaryError}>
-            {props.error}
+        </div>*/}
+        {error && <div className={classes.formSummaryError}>
+            {error}
         </div>}
         <div>
             <button>Login</button>
