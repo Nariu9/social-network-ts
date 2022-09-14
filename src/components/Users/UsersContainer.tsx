@@ -35,11 +35,13 @@ type UsersContainerPropsType = mapStateToPropsType & mapDispatchToPropsType
 class UsersContainer extends React.Component<UsersContainerPropsType> {
 
     componentDidMount() {
-        this.props.requestUsersTC(this.props.currentPage, this.props.pageSize)
+        const {currentPage, pageSize} = this.props
+        this.props.requestUsersTC(currentPage, pageSize)
     }
 
     onPageChanged = (pageNumber: number) => {
-        this.props.requestUsersTC(pageNumber, this.props.pageSize)
+        const {pageSize} = this.props
+        this.props.requestUsersTC(pageNumber, pageSize)
     }
 
     render() {
