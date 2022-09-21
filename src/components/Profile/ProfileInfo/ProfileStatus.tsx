@@ -40,7 +40,7 @@ export class ProfileStatus extends React.Component<ProfileStatusPropsType> {
         return <>
             {!this.state.editMode && <div style={{fontWeight: 'bold'}}>
                 <span onDoubleClick={this.activateEditMode}>
-                    {this.state.status || '--------'}
+                    {this.props.status || '--------'}
                 </span>
             </div>}
             {this.state.editMode && <div>
