@@ -25,7 +25,7 @@ export const Users: React.FC<UsersPropsType> = ({
                                                 }) => {
 
     return <div>
-        <Paginator totalUsersCount={totalUsersCount}
+        <Paginator totalItemsCount={totalUsersCount}
                    pageSize={pageSize}
                    currentPage={currentPage}
                    onPageChanged={onPageChanged}/>
