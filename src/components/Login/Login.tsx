@@ -1,6 +1,6 @@
 import React from 'react';
 import {InjectedFormProps, reduxForm} from 'redux-form';
-import {createField, FormControl} from '../common/FormsControls/FormsControls';
+import {createField, Input} from '../common/FormsControls/FormsControls';
 import {required} from '../../utils/validators/validators';
 import {connect} from 'react-redux';
 import {loginTC} from '../../redux/auth-reducer';
@@ -29,9 +29,9 @@ type FormDataType = {
 
 const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({handleSubmit, error}) => {
     return <form onSubmit={handleSubmit}>
-        {createField('Email', 'email', [required], FormControl, 'input')}
-        {createField('Password', 'password', [required], FormControl, 'input', {type: 'password'})}
-        {createField(null, 'rememberMe', [], FormControl, 'input', {type: 'checkbox'}, 'remember me')}
+        {createField('Email', 'email', [required], Input, 'input')}
+        {createField('Password', 'password', [required], Input, 'input', {type: 'password'})}
+        {createField(null, 'rememberMe', [], Input, 'input', {type: 'checkbox'}, 'remember me')}
 
         {/*<div>
              <Field placeholder={'Email'} name={'email'} component={FormControl} validate={[required]}
