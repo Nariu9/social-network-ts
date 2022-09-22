@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import classes from './Paginator.module.css';
 
 type PaginatorPropsType = {
@@ -27,6 +27,9 @@ export const Paginator: React.FC<PaginatorPropsType> = ({
     const leftPortionPageNumber = (portionNumber - 1) * portionSize + 1
     const rightPortionPageNumber = portionNumber * portionSize
 
+    useEffect(() => {
+        setPortionNumber(Math.ceil(currentPage / portionSize))
+    }, [currentPage, portionSize])
 
     return <div className={classes.pages}>
         {portionNumber > 1 && <button onClick={() => setPortionNumber(portionNumber - 1)}>PREV</button>}
