@@ -1,18 +1,13 @@
-.formControl {
-
-}
-
-.formControl.error input,
-.formControl.error textarea {
+.errorInput {
     border: 2px solid red;
 }
 
-.formControl.error input:focus,
-.formControl.error textarea:focus {
+.input:focus,
+.errorInput:focus {
     outline: none;
 }
 
-.formControl.error span {
+.errorMessage {
     color: red;
 }
 
