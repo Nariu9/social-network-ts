@@ -17,7 +17,7 @@ export const profileReducer = (state: ProfilePageStateType = initialState, actio
         case ADD_POST:
             return {
                 ...state,
-                posts: [...state.posts, {id: 5, message: action.newPost, likesCount: 0}]
+                posts: [{id: 5, message: action.newPost, likesCount: 0}, ...state.posts]
             }
         case SET_USER_PROFILE:
             return {...state, profile: action.profile}
