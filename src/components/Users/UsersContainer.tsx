@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import {followThunkCreator, requestUsersTC, unfollowThunkCreator, UserType} from '../../redux/users-reducer';
 import {RootState} from '../../redux/redux-store';
 import {Users} from './Users';
-import {Preloader} from '../common/Preloader/Preloader';
 import {compose} from 'redux';
 import {
     getCurrentPage,
@@ -46,16 +45,15 @@ class UsersContainer extends React.Component<UsersContainerPropsType> {
 
     render() {
         return <>
-            {this.props.isFetching
-                ? <Preloader/>
-                : <Users totalUsersCount={this.props.totalUsersCount}
-                         pageSize={this.props.pageSize}
-                         currentPage={this.props.currentPage}
-                         users={this.props.users}
-                         onPageChanged={this.onPageChanged}
-                         followingInProgress={this.props.followingInProgress}
-                         followThunkCreator={this.props.followThunkCreator}
-                         unfollowThunkCreator={this.props.unfollowThunkCreator}/>}
+            <Users totalUsersCount={this.props.totalUsersCount}
+                   pageSize={this.props.pageSize}
+                   currentPage={this.props.currentPage}
+                   users={this.props.users}
+                   isFetching={this.props.isFetching}
+                   onPageChanged={this.onPageChanged}
+                   followingInProgress={this.props.followingInProgress}
+                   followThunkCreator={this.props.followThunkCreator}
+                   unfollowThunkCreator={this.props.unfollowThunkCreator}/>
         </>
     }
 }
