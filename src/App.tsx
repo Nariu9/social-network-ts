@@ -1,9 +1,7 @@
 import React from 'react';
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
-// import DialogsContainer from './components/Dialogs/DialogsContainer';
-// import ProfileContainer from './components/Profile/ProfileContainer';
-import {BrowserRouter, Redirect, Route} from 'react-router-dom';
+import {HashRouter, Redirect, Route} from 'react-router-dom';
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
@@ -65,11 +63,11 @@ const mapStateToProps = (state: RootState): mapStateToPropsType => ({
 const AppContainer = connect(mapStateToProps, {initializeAppTC})(App);
 
 const MainApp = () => {
-    return <BrowserRouter>
+    return <HashRouter>
         <Provider store={store}>
             <AppContainer/>
         </Provider>
-    </BrowserRouter>
+    </HashRouter>
 }
 
 export default MainApp
