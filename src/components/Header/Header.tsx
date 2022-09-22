@@ -12,7 +12,7 @@ const Header = ({isAuth, login, logout}: HeaderPropsType) => {
     return (
         <header className={classes.header}>
             <img
-                src="https://www.freepnglogos.com/uploads/ukraine-flag-png/circle-flag-of-ukraine-png-download-0.png"
+                src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png"
                 alt="logo"/>
             <div className={classes.loginBlock}>
                 {isAuth
