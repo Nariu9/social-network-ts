@@ -34,13 +34,10 @@ export const getAuthDataThunkCreator = (): AppThunk => async (dispatch) => {
 }
 
 export const loginTC = (email: string, password: string, rememberMe: boolean): AppThunk =>  (dispatch) => {
-    debugger
     authAPI.login(email, password, rememberMe).then(data => {
-        debugger
         if (data.resultCode === 0) {
             dispatch(getAuthDataThunkCreator())
         } else {
-            debugger
             const message = data.messages.length > 0 ? data.messages[0] : 'An error has occurred'
             dispatch(stopSubmit('login', {_error: message}))
         }
