@@ -1,19 +1,22 @@
 import React from 'react';
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
-import DialogsContainer from './components/Dialogs/DialogsContainer';
+// import DialogsContainer from './components/Dialogs/DialogsContainer';
+// import ProfileContainer from './components/Profile/ProfileContainer';
 import {BrowserRouter, Redirect, Route} from 'react-router-dom';
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 import UsersContainer from './components/Users/UsersContainer';
-import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import Login from './components/Login/Login';
 import {connect, Provider} from 'react-redux';
 import {initializeAppTC} from './redux/app-reducer';
 import store, {RootState} from './redux/redux-store';
 import {Preloader} from './components/common/Preloader/Preloader';
+
+const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
+const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
 
 
 class App extends React.Component<AppPropsType> {
@@ -32,8 +35,10 @@ class App extends React.Component<AppPropsType> {
                 <Navbar/>
                 <div className="app-wrapper-content">
                     <Route path={'/'} exact render={() => <Redirect to={'/profile'}/>}/>
-                    <Route path={'/dialogs'} render={() => <DialogsContainer/>}/>
-                    <Route path={'/profile/:userId?'} render={() => <ProfileContainer/>}/>
+                    <React.Suspense fallback={<Preloader/>}>
+                        <Route path={'/dialogs'} render={() => <DialogsContainer/>}/>
+                        <Route path={'/profile/:userId?'} render={() => <ProfileContainer/>}/>
+                    </React.Suspense>
                     <Route path={'/users'} render={() => <UsersContainer/>}/>
                     <Route path={'/news'} render={() => <News/>}/>
                     <Route path={'/music'} render={() => <Music/>}/>
