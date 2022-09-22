@@ -12,3 +12,10 @@
     grid-area: c;
     background-color: honeydew;
 }
+
+.preloader {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -30%);
+}
