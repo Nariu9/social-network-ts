@@ -25,6 +25,8 @@ export const profileReducer = (state: ProfilePageStateType = initialState, actio
             return {...state, status: action.status}
         case DELETE_POST:
             return {...state, posts: state.posts.filter(p => p.id !== action.postId)}
+        case SAVE_PHOTO_SUCCESS:
+            return {...state, profile: {...state.profile, photos: action.photos}}
         default:
             return state;
     }
@@ -35,6 +37,10 @@ export const addPostCreator = (newPost: string) => ({type: ADD_POST, newPost} as
 export const setUserProfile = (profile: ProfileType) => ({type: SET_USER_PROFILE, profile} as const)
 export const setUserStatus = (status: string) => ({type: SET_STATUS, status} as const)
 export const deletePostAC = (postId: number) => ({type: DELETE_POST, postId} as const)
+export const savePhotoSuccessAC = (photos: { small: string, large: string }) => ({
+    type: SAVE_PHOTO_SUCCESS,
+    photos
+} as const)
 
 // thunk creators
 export const getUserProfileThunkCreator = (userId: number): AppThunk => async (dispatch) => {
@@ -54,6 +60,13 @@ export const updateUserStatusThunkCreator = (status: string): AppThunk => async 
     }
 }
 
+export const saveMainPhotoTC = (photo: File): AppThunk => async (dispatch) => {
+    const res = await profileAPI.savePhoto(photo)
+    if (res.resultCode === 0) {
+        dispatch(savePhotoSuccessAC(res.data.photos))
+    }
+}
+
 // types
 export type PostType = {
     id: number
@@ -61,8 +74,8 @@ export type PostType = {
     likesCount: number
 }
 export type ProfileType = {
-    aboutMe: string
-    contacts: {
+    aboutMe?: string
+    contacts?: {
         facebook: string
         website: string
         vk: string
@@ -72,10 +85,10 @@ export type ProfileType = {
         github: string
         mainLink: string
     }
-    lookingForAJob: boolean
-    lookingForAJobDescription: string
-    fullName: string
-    userId: number
+    lookingForAJob?: boolean
+    lookingForAJobDescription?: string
+    fullName?: string
+    userId?: number
     photos: {
         small: string
         large: string
@@ -91,9 +104,11 @@ const ADD_POST = 'profile/ADD_POST';
 const SET_USER_PROFILE = 'profile/SET_USER_PROFILE';
 const SET_STATUS = 'profile/SET_STATUS';
 const DELETE_POST = 'profile/DELETE_POST';
+const SAVE_PHOTO_SUCCESS = 'profile/SAVE_PHOTO_SUCCESS';
 
 export type ProfileActionType =
     ReturnType<typeof addPostCreator>
     | ReturnType<typeof setUserProfile>
     | ReturnType<typeof setUserStatus>
     | ReturnType<typeof deletePostAC>
+    | ReturnType<typeof savePhotoSuccessAC>
