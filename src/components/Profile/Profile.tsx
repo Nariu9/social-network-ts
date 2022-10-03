@@ -6,15 +6,17 @@ import {ProfileType} from '../../redux/profile-reducer';
 
 
 type ProfilePropsType = {
+    isOwner: boolean
     profile: null | ProfileType,
     status: string,
     updateStatus: (status: string) => void
+    saveMainPhoto: (photo: File) => void
 }
 
-const Profile: React.FC<ProfilePropsType> = (props) => {
+const Profile: React.FC<ProfilePropsType> = ({isOwner, profile, status, updateStatus, saveMainPhoto}) => {
     return (
         <div>
-            <ProfileInfo profile={props.profile} status={props.status} updateStatus={props.updateStatus}/>
+            <ProfileInfo isOwner={isOwner} profile={profile} status={status} updateStatus={updateStatus} saveMainPhoto={saveMainPhoto}/>
             <MyPostsContainer/>
         </div>
     )
