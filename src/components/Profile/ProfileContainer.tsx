@@ -3,7 +3,7 @@ import Profile from './Profile';
 import {connect} from 'react-redux';
 import {
     getUserProfileThunkCreator,
-    getUserStatusThunkCreator,
+    getUserStatusThunkCreator, saveMainPhotoTC,
     updateUserStatusThunkCreator,
 } from '../../redux/profile-reducer';
 import {RootState} from '../../redux/redux-store';
@@ -14,7 +14,7 @@ import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 
 class ProfileContainer extends React.Component<ProfileContainerPropsType> {
 
-    componentDidMount() {
+    refreshProfile() {
         let userId = this.props.match.params.userId ?? this.props.authorizedUserId
         if (!userId) {
             this.props.history.push('/login')
@@ -23,9 +23,22 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
         this.props.getUserStatusThunkCreator(Number(userId))
     }
 
+    componentDidMount() {
+        this.refreshProfile()
+    }
+
+    componentDidUpdate(prevProps: Readonly<ProfileContainerPropsType>, prevState: Readonly<{}>, snapshot?: any) {
+        if (this.props.match.params.userId !== prevProps.match.params.userId) {
+            this.refreshProfile()
+        }
+    }
+
     render() {
-        return <Profile profile={this.props.profile} status={this.props.status}
-                        updateStatus={this.props.updateUserStatusThunkCreator}/>
+        return <Profile isOwner={!this.props.match.params.userId}
+                        profile={this.props.profile}
+                        status={this.props.status}
+                        updateStatus={this.props.updateUserStatusThunkCreator}
+                        saveMainPhoto={this.props.saveMainPhotoTC}/>
     }
 }
 
@@ -34,6 +47,7 @@ type mapDispatchToPropsType = {
     getUserProfileThunkCreator: (userId: number) => void
     getUserStatusThunkCreator: (userId: number) => void
     updateUserStatusThunkCreator: (status: string) => void
+    saveMainPhotoTC: (photo: File) => void
 }
 type PropsFromConnectType = mapDispatchToPropsType & mapStateToPropsType
 
@@ -53,7 +67,8 @@ export default compose<React.ComponentType>(
         {
             getUserProfileThunkCreator,
             getUserStatusThunkCreator,
-            updateUserStatusThunkCreator
+            updateUserStatusThunkCreator,
+            saveMainPhotoTC
         }),
     withRouter,
     withAuthRedirect
