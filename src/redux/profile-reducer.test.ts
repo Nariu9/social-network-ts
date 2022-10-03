@@ -55,7 +55,7 @@ test('correct profile should be added to state', () => {
     const endState = profileReducer(startState, setUserProfile(myProfile))
 
     expect(endState.profile?.aboutMe).toBe('Hi, I\'m is Alan')
-    expect(endState.profile?.contacts.github).toBe('https://github.com')
+    expect(endState.profile?.contacts?.github).toBe('https://github.com')
     expect(endState.profile?.photos.small).toBe('mySmallPhoto')
 })
 
