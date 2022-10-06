@@ -2,8 +2,11 @@ import React from 'react';
 import Profile from './Profile';
 import {connect} from 'react-redux';
 import {
-    getUserProfileThunkCreator,
-    getUserStatusThunkCreator, saveMainPhotoTC,
+    getUserProfileTC,
+    getUserStatusThunkCreator,
+    saveMainPhotoTC,
+    saveProfileTC,
+    UpdateProfileType,
     updateUserStatusThunkCreator,
 } from '../../redux/profile-reducer';
 import {RootState} from '../../redux/redux-store';
@@ -19,7 +22,7 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
         if (!userId) {
             this.props.history.push('/login')
         }
-        this.props.getUserProfileThunkCreator(Number(userId))
+        this.props.getUserProfileTC(Number(userId))
         this.props.getUserStatusThunkCreator(Number(userId))
     }
 
@@ -38,16 +41,18 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
                         profile={this.props.profile}
                         status={this.props.status}
                         updateStatus={this.props.updateUserStatusThunkCreator}
-                        saveMainPhoto={this.props.saveMainPhotoTC}/>
+                        saveMainPhoto={this.props.saveMainPhotoTC}
+                        saveProfile={this.props.saveProfileTC}/>
     }
 }
 
 type mapStateToPropsType = ReturnType<typeof mapStateToProps>
 type mapDispatchToPropsType = {
-    getUserProfileThunkCreator: (userId: number) => void
+    getUserProfileTC: (userId: number) => void
     getUserStatusThunkCreator: (userId: number) => void
     updateUserStatusThunkCreator: (status: string) => void
     saveMainPhotoTC: (photo: File) => void
+    saveProfileTC: (profile: UpdateProfileType) => Promise<any>
 }
 type PropsFromConnectType = mapDispatchToPropsType & mapStateToPropsType
 
@@ -65,10 +70,11 @@ const mapStateToProps = (state: RootState) => ({
 export default compose<React.ComponentType>(
     connect(mapStateToProps,
         {
-            getUserProfileThunkCreator,
+            getUserProfileTC,
             getUserStatusThunkCreator,
             updateUserStatusThunkCreator,
-            saveMainPhotoTC
+            saveMainPhotoTC,
+            saveProfileTC
         }),
     withRouter,
     withAuthRedirect
