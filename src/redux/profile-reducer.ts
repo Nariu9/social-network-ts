@@ -1,5 +1,6 @@
 import {profileAPI} from '../api/api';
-import {AppThunk} from './redux-store';
+import {AppThunk, RootState} from './redux-store';
+import {stopSubmit} from 'redux-form';
 
 const initialState: ProfilePageStateType = {
     posts: [
@@ -27,6 +28,8 @@ export const profileReducer = (state: ProfilePageStateType = initialState, actio
             return {...state, posts: state.posts.filter(p => p.id !== action.postId)}
         case SAVE_PHOTO_SUCCESS:
             return {...state, profile: {...state.profile, photos: action.photos}}
+        case SAVE_PROFILE_SUCCESS:
+            return {...state, profile: {...state.profile, ...action.profile}}
         default:
             return state;
     }
@@ -41,9 +44,10 @@ export const savePhotoSuccessAC = (photos: { small: string, large: string }) => 
     type: SAVE_PHOTO_SUCCESS,
     photos
 } as const)
+export const saveProfileSuccessAC = (profile: UpdateProfileType) => ({type: SAVE_PROFILE_SUCCESS, profile} as const)
 
 // thunk creators
-export const getUserProfileThunkCreator = (userId: number): AppThunk => async (dispatch) => {
+export const getUserProfileTC = (userId: number): AppThunk => async (dispatch) => {
     const res = await profileAPI.getProfile(userId)
     dispatch(setUserProfile(res))
 }
@@ -64,6 +68,17 @@ export const saveMainPhotoTC = (photo: File): AppThunk => async (dispatch) => {
     const res = await profileAPI.savePhoto(photo)
     if (res.resultCode === 0) {
         dispatch(savePhotoSuccessAC(res.data.photos))
+    }
+}
+export const saveProfileTC = (profile: UpdateProfileType): AppThunk => async (dispatch, getState: () => RootState) => {
+    const userId = getState().auth.id
+    const res = await profileAPI.saveProfile(profile)
+    if (res.resultCode === 0) {
+        dispatch(saveProfileSuccessAC(profile))
+        userId && dispatch(getUserProfileTC(userId))
+    } else {
+        dispatch(stopSubmit('edit-profile', {_error: res.messages[0]}))
+        return Promise.reject(res.messages[0])
     }
 }
 
@@ -89,7 +104,7 @@ export type ProfileType = {
     lookingForAJobDescription?: string
     fullName?: string
     userId?: number
-    photos: {
+    photos?: {
         small: string
         large: string
     }
@@ -99,12 +114,14 @@ export type ProfilePageStateType = {
     profile: ProfileType | null,
     status: string
 }
+export type UpdateProfileType = Omit<ProfileType, 'photos'>
 
 const ADD_POST = 'profile/ADD_POST';
 const SET_USER_PROFILE = 'profile/SET_USER_PROFILE';
 const SET_STATUS = 'profile/SET_STATUS';
 const DELETE_POST = 'profile/DELETE_POST';
 const SAVE_PHOTO_SUCCESS = 'profile/SAVE_PHOTO_SUCCESS';
+const SAVE_PROFILE_SUCCESS = 'profile/SAVE_PROFILE_SUCCESS';
 
 export type ProfileActionType =
     ReturnType<typeof addPostCreator>
@@ -112,3 +129,4 @@ export type ProfileActionType =
     | ReturnType<typeof setUserStatus>
     | ReturnType<typeof deletePostAC>
     | ReturnType<typeof savePhotoSuccessAC>
+    | ReturnType<typeof saveProfileSuccessAC>
