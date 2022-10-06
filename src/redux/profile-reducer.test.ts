@@ -56,7 +56,7 @@ test('correct profile should be added to state', () => {
 
     expect(endState.profile?.aboutMe).toBe('Hi, I\'m is Alan')
     expect(endState.profile?.contacts?.github).toBe('https://github.com')
-    expect(endState.profile?.photos.small).toBe('mySmallPhoto')
+    expect(endState.profile?.photos?.small).toBe('mySmallPhoto')
 })
 
 test('correct status should be added to state', () => {
