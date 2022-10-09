@@ -29,7 +29,7 @@ export const profileAPI = {
         return instance.get(`profile/status/${userId}`).then(response => response.data)
     },
     updateStatus(status: string) {
-        return instance.put(`profile/status`, {status: status}).then(response => response.data)
+        return instance.put<ResponseType>(`profile/status`, {status: status}).then(response => response.data)
     },
     savePhoto(photo: File) {
         const formData = new FormData()
