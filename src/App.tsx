@@ -12,6 +12,7 @@ import {connect, Provider} from 'react-redux';
 import {initializeAppTC} from './redux/app-reducer';
 import store, {RootState} from './redux/redux-store';
 import {Preloader} from './components/common/Preloader/Preloader';
+import 'antd/dist/antd.css'
 
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
