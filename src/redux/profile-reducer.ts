@@ -1,6 +1,9 @@
 import {profileAPI} from '../api/api';
 import {AppThunk, RootState} from './redux-store';
 import {stopSubmit} from 'redux-form';
+import {handleServerAppError, handleServerNetworkError} from '../utils/errors/errorHandlers';
+import {openNotificationWithIcon} from '../components/Notification/notifications';
+import {AxiosError} from 'axios';
 
 const initialState: ProfilePageStateType = {
     posts: [
@@ -58,9 +61,17 @@ export const getUserStatusThunkCreator = (userId: number): AppThunk => async (di
 }
 
 export const updateUserStatusThunkCreator = (status: string): AppThunk => async (dispatch) => {
-    const res = await profileAPI.updateStatus(status)
-    if (res.resultCode === 0) {
-        dispatch(setUserStatus(status))
+    try {
+        const res = await profileAPI.updateStatus(status)
+        if (res.resultCode === 0) {
+            dispatch(setUserStatus(status))
+            openNotificationWithIcon('success', 'Success!', 'Status changed successfully')
+        } else {
+            handleServerAppError(res)
+        }
+    } catch (e) {
+        const error = e as AxiosError
+        handleServerNetworkError(error)
     }
 }
 
