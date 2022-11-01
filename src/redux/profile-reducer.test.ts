@@ -1,19 +1,23 @@
 import {
-    addPostCreator, deletePostAC,
+    addPostAC, deletePostAC,
     ProfilePageStateType,
     profileReducer,
     ProfileType,
     setUserProfile,
     setUserStatus
 } from './profile-reducer';
+import {v1} from 'uuid';
 
 let startState: ProfilePageStateType
+let postId1 = v1()
+let postId2 = v1()
+
 
 beforeEach(() => {
     startState = {
         posts: [
-            {id: 1, message: 'My first post', likesCount: 50},
-            {id: 2, message: 'My second post', likesCount: 60},
+            {id: postId1, message: 'My first post', likesCount: 50},
+            {id: postId2, message: 'My second post', likesCount: 60},
         ],
         profile: null,
         status: ''
@@ -21,18 +25,18 @@ beforeEach(() => {
 })
 
 test('correct post should be added to state', () => {
-    const endState = profileReducer(startState, addPostCreator('My new post!'))
+    const endState = profileReducer(startState, addPostAC('My new post!'))
 
     expect(startState.posts.length).toBe(2)
     expect(endState.posts.length).toBe(3)
-    expect(endState.posts[2]).toStrictEqual({id: 5, message: 'My new post!', likesCount: 0})
+    expect(endState.posts[2]).toStrictEqual({id: v1(), message: 'My new post!', likesCount: 0})
 })
 
 test('correct profile should be added to state', () => {
 
-    const myProfile:ProfileType = {
+    const myProfile: ProfileType = {
         aboutMe: 'Hi, I\'m is Alan',
-        contacts:{
+        contacts: {
             facebook: '',
             website: '',
             vk: '',
@@ -66,17 +70,17 @@ test('correct status should be added to state', () => {
 })
 
 test('posts length after deleting should be decremented', () => {
-    const endState = profileReducer(startState, deletePostAC(1))
+    const endState = profileReducer(startState, deletePostAC(postId1))
 
     expect(startState.posts.length).toBe(2)
     expect(endState.posts.length).toBe(1)
-    expect(endState.posts[0]).toStrictEqual({id: 2, message: 'My second post', likesCount: 60})
+    expect(endState.posts[0]).toStrictEqual({id: postId2, message: 'My second post', likesCount: 60})
 })
 
 test('posts length after deleting shouldn\'t be decremented if post id is incorrect', () => {
-    const endState = profileReducer(startState, deletePostAC(125))
+    const endState = profileReducer(startState, deletePostAC(v1()))
 
     expect(startState.posts.length).toBe(2)
     expect(endState.posts.length).toBe(2)
-    expect(endState.posts[1]).toStrictEqual({id: 2, message: 'My second post', likesCount: 60})
+    expect(endState.posts[1]).toStrictEqual({id: postId2, message: 'My second post', likesCount: 60})
 })
