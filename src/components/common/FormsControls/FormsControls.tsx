@@ -9,7 +9,7 @@ type FormControlPropsType = {
     isError: boolean
 } & WrappedFieldProps
 
-export const FormControl = ({meta, isError, children }: FormControlPropsType) => {
+export const FormControl = ({meta, isError, children}: FormControlPropsType) => {
     return (
         <>
             {children}
@@ -18,11 +18,14 @@ export const FormControl = ({meta, isError, children }: FormControlPropsType) =>
     );
 };
 
-export const Textarea = (props:FormControlPropsType) => {
-    return <FormControl {...props}><textarea {...props.input}/></FormControl>
+export const Textarea = (props: FormControlPropsType) => {
+    const isError = {isError: props.meta.touched && props.meta.error}
+    return <FormControl {...props} {...isError}>
+        <textarea {...props.input} className={isError.isError ? classes.errorInput : classes.input}/>
+    </FormControl>
 }
 
-export const Input = (props: FormControlPropsType)=> {
+export const Input = (props: FormControlPropsType) => {
     const isError = {isError: props.meta.touched && props.meta.error}
     return (
         <FormControl {...props} {...isError}>
