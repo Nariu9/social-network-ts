@@ -1,16 +1,17 @@
 import {profileAPI} from '../api/api';
 import {AppThunk, RootState} from './redux-store';
-import {stopSubmit} from 'redux-form';
+import {reset, stopSubmit} from 'redux-form';
 import {handleServerAppError, handleServerNetworkError} from '../utils/errors/errorHandlers';
 import {openNotificationWithIcon} from '../components/Notification/notifications';
 import {AxiosError} from 'axios';
+import {v1} from 'uuid';
 
 const initialState: ProfilePageStateType = {
     posts: [
-        {id: 1, message: 'Hi, how are you?', likesCount: 15},
-        {id: 2, message: 'It\'s my first post', likesCount: 20},
-        {id: 3, message: 'Or it is not?', likesCount: 3},
-        {id: 4, message: 'Hah...', likesCount: 0},
+        {id: v1(), message: 'Hi, how are you?', likesCount: 15},
+        {id: v1(), message: 'It\'s my first post', likesCount: 20},
+        {id: v1(), message: 'Or it is not?', likesCount: 3},
+        {id: v1(), message: 'Hah...', likesCount: 0},
     ],
     profile: null,
     status: ''
@@ -21,7 +22,7 @@ export const profileReducer = (state: ProfilePageStateType = initialState, actio
         case ADD_POST:
             return {
                 ...state,
-                posts: [{id: 5, message: action.newPost, likesCount: 0}, ...state.posts]
+                posts: [{id: v1(), message: action.newPost, likesCount: 0}, ...state.posts]
             }
         case SET_USER_PROFILE:
             return {...state, profile: action.profile}
@@ -39,10 +40,10 @@ export const profileReducer = (state: ProfilePageStateType = initialState, actio
 }
 
 // action creators
-export const addPostCreator = (newPost: string) => ({type: ADD_POST, newPost} as const)
+export const addPostAC = (newPost: string) => ({type: ADD_POST, newPost} as const)
 export const setUserProfile = (profile: ProfileType) => ({type: SET_USER_PROFILE, profile} as const)
 export const setUserStatus = (status: string) => ({type: SET_STATUS, status} as const)
-export const deletePostAC = (postId: number) => ({type: DELETE_POST, postId} as const)
+export const deletePostAC = (postId: string) => ({type: DELETE_POST, postId} as const)
 export const savePhotoSuccessAC = (photos: { small: string, large: string }) => ({
     type: SAVE_PHOTO_SUCCESS,
     photos
@@ -81,6 +82,7 @@ export const saveMainPhotoTC = (photo: File): AppThunk => async (dispatch) => {
         dispatch(savePhotoSuccessAC(res.data.photos))
     }
 }
+
 export const saveProfileTC = (profile: UpdateProfileType): AppThunk => async (dispatch, getState: () => RootState) => {
     const userId = getState().auth.id
     const res = await profileAPI.saveProfile(profile)
@@ -93,9 +95,14 @@ export const saveProfileTC = (profile: UpdateProfileType): AppThunk => async (di
     }
 }
 
+export const addPostTC = (newPost: string): AppThunk => (dispatch) => {
+    dispatch(addPostAC(newPost))
+    dispatch(reset('profileAddPostReduxForm'))
+}
+
 // types
 export type PostType = {
-    id: number
+    id: string
     message: string
     likesCount: number
 }
@@ -135,7 +142,7 @@ const SAVE_PHOTO_SUCCESS = 'profile/SAVE_PHOTO_SUCCESS';
 const SAVE_PROFILE_SUCCESS = 'profile/SAVE_PROFILE_SUCCESS';
 
 export type ProfileActionType =
-    ReturnType<typeof addPostCreator>
+    ReturnType<typeof addPostAC>
     | ReturnType<typeof setUserProfile>
     | ReturnType<typeof setUserStatus>
     | ReturnType<typeof deletePostAC>
