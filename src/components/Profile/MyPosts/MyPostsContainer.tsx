@@ -1,9 +1,9 @@
-import React from 'react';
 import MyPosts from './MyPosts';
-import {addPostCreator, PostType} from '../../../redux/profile-reducer';
+import {addPostTC, PostType} from '../../../redux/profile-reducer';
 import {connect} from 'react-redux';
 import {RootState} from '../../../redux/redux-store';
-import {Dispatch} from 'redux';
+import {AnyAction} from 'redux';
+import {ThunkDispatch} from 'redux-thunk';
 
 type mapStateToPropsType = {
     posts: Array<PostType>
@@ -19,9 +19,9 @@ const mapStateToProps = (state: RootState): mapStateToPropsType => {
     }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch): mapDispatchToPropsType => {
+const mapDispatchToProps = (dispatch: ThunkDispatch<RootState, unknown, AnyAction>): mapDispatchToPropsType => {
     return {
-        addPost: (newPost: string) => dispatch(addPostCreator(newPost)),
+        addPost: (newPost: string) => dispatch(addPostTC(newPost)),
     }
 }
 
