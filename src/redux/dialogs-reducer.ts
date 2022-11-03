@@ -1,41 +1,51 @@
+import {v1} from 'uuid';
+import {AppThunk} from './redux-store';
+import {reset} from 'redux-form';
+
 const initialState: DialogsPageStateType = {
     dialogs: [
-        {id: 1, name: 'Dimych'},
-        {id: 2, name: 'Andrey'},
-        {id: 3, name: 'Sveta'},
-        {id: 4, name: 'Sasha'},
-        {id: 5, name: 'Viktor'},
-        {id: 6, name: 'Masha'}
+        {id: v1(), name: 'Dimych'},
+        {id: v1(), name: 'Andrey'},
+        {id: v1(), name: 'Sveta'},
+        {id: v1(), name: 'Sasha'},
+        {id: v1(), name: 'Viktor'},
+        {id: v1(), name: 'Masha'}
     ] /*as DialogType[]*/,              //уточнение для второго варианта типизации
     messages: [
-        {id: 1, message: 'Hi'},
-        {id: 2, message: 'Ho'},
-        {id: 3, message: 'Let\'s go'},
-        {id: 4, message: 'Hi'},
-        {id: 5, message: 'Hi'},
-        {id: 6, message: 'Hi'}
+        {id: v1(), message: 'Hi'},
+        {id: v1(), message: 'Ho'},
+        {id: v1(), message: 'Let\'s go'},
+        {id: v1(), message: 'Hi'},
+        {id: v1(), message: 'Hi'},
+        {id: v1(), message: 'Hi'}
     ] /*as MessageType[]*/,             //уточнение для второго варианта типизации
 }
 
 export const dialogsReducer = (state: DialogsPageStateType = initialState, action: DialogsActionsType): DialogsPageStateType => {
     switch (action.type) {
         case ADD_MESSAGE:
-            return {...state, messages: [...state.messages, {id: 7, message: action.newMessage}]}
+            return {...state, messages: [...state.messages, {id: v1(), message: action.newMessage}]}
         default:
             return state;
     }
 }
 
 // action creators
-export const addMessageCreator = (newMessage: string) => ({type: ADD_MESSAGE, newMessage} as const)
+export const addMessageAC = (newMessage: string) => ({type: ADD_MESSAGE, newMessage} as const)
+
+//thunk creators
+export const addMessageTC = (newMessage: string): AppThunk => (dispatch) => {
+    dispatch(addMessageAC(newMessage))
+    dispatch(reset('dialogAddMessageReduxForm'))
+}
 
 // types
 export type DialogType = {
-    id: number
+    id: string
     name: string
 }
 export type MessageType = {
-    id: number
+    id: string
     message: string
 }
 export type DialogsPageStateType = {      //первый вариант типизации
@@ -46,4 +56,4 @@ export type DialogsPageStateType = {      //первый вариант типи
 
 const ADD_MESSAGE = 'dialogs/ADD_MESSAGE';
 
-export type DialogsActionsType = ReturnType<typeof addMessageCreator>
+export type DialogsActionsType = ReturnType<typeof addMessageAC>
