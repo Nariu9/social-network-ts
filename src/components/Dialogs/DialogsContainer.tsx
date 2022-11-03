@@ -1,10 +1,11 @@
-import {addMessageCreator, DialogsPageStateType} from '../../redux/dialogs-reducer';
+import {addMessageTC, DialogsPageStateType} from '../../redux/dialogs-reducer';
 import Dialogs from './Dialogs';
 import {connect} from 'react-redux';
 import {RootState} from '../../redux/redux-store';
-import {compose, Dispatch} from 'redux';
+import {AnyAction, compose} from 'redux';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 import React from 'react';
+import {ThunkDispatch} from 'redux-thunk';
 
 type mapStateToPropsType = {
     dialogsPage: DialogsPageStateType
@@ -20,9 +21,9 @@ const mapStateToProps = (state: RootState): mapStateToPropsType => {
     }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch): mapDispatchToPropsType => {
+const mapDispatchToProps = (dispatch: ThunkDispatch<RootState, unknown, AnyAction>): mapDispatchToPropsType => {
     return {
-        addMessage: (newMessage:string) => dispatch(addMessageCreator(newMessage))
+        addMessage: (newMessage:string) => dispatch(addMessageTC(newMessage))
     }
 }
 
