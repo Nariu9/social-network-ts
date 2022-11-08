@@ -7,6 +7,7 @@ import {loginTC} from '../../redux/auth-reducer';
 import {RootState} from '../../redux/redux-store';
 import {Redirect} from 'react-router-dom';
 import classes from '../common/FormsControls/FormsControls.module.css';
+import styles from './Login.module.css';
 
 const Login: React.FC<LoginPropsType> = ({loginTC, isAuth, captchaUrl}) => {
     const onSubmit = (formData: FormDataType) => loginTC(formData.email, formData.password, formData.rememberMe, formData.captcha)
@@ -15,9 +16,21 @@ const Login: React.FC<LoginPropsType> = ({loginTC, isAuth, captchaUrl}) => {
         return <Redirect to={'/profile'}/>
     }
 
-    return <div>
-        <h1>Login</h1>
-        <LoginReduxForm onSubmit={onSubmit} captchaUrl={captchaUrl}/>
+    return <div className={styles.container}>
+        <div className={styles.form}>
+            <h1>Login</h1>
+            <LoginReduxForm onSubmit={onSubmit} captchaUrl={captchaUrl}/>
+        </div>
+        <div className={styles.credentials}>
+            <p>To log in get registered
+                <a href={'https://social-network.samuraijs.com/'}
+                   target={'_blank'} rel={'noreferrer'}> here
+                </a>
+            </p>
+            <p>or use common test account credentials:</p>
+            <p>Email: <b>free@samuraijs.com</b></p>
+            <p>Password: <b>free</b></p>
+        </div>
     </div>
 };
 
