@@ -1,0 +1,49 @@
+.container {
+  height: 100vh;
+  position: relative;
+  background: linear-gradient(135deg, rgba(130, 36, 227, 0.04) 0%, rgba(255, 255, 255, 0) 25%, rgba(130, 36, 227, 0.07) 100%);
+
+  .login {
+    display: flex;
+    justify-content: space-between;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    width: 680px;
+    min-height: 535px;
+
+    .credentials,
+    form {
+      width: 50%;
+      padding: 80px 50px;
+    }
+
+    .credentials {
+      background-color: rgba(130, 36, 227, 0.8);
+      color: #fff;
+      border-radius: 12px 0 0 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+
+      .title {
+        line-height: 1.5;
+        font-family: "Quicksand", Verdana, sans-serif;
+        font-weight: 700;
+        font-size: 1.616em;
+      }
+
+      .subtitle {
+        font-size: 16px;
+        line-height: 26px;
+      }
+
+      div {
+        .text {
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+}
