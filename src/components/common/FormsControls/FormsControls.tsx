@@ -35,12 +35,12 @@ export const Input = (props: FormControlPropsType) => {
 };
 
 export const createField = (placeholder: string | null, name: string, validators: ValidatorType[] | [], component: React.ElementType, fieldType: string, props: any = {}, text: string = '') => {
-    return <div>
+    return <>
         <Field placeholder={placeholder} name={name}
                validate={validators}
                component={component}
                FieldType={fieldType}
                {...props}/>
         {text}
-    </div>
+    </>
 }
