@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './App.scss';
 import Navbar from './components/Navbar/Navbar';
 import {HashRouter, Redirect, Route, Switch} from 'react-router-dom';
 import News from './components/News/News';
@@ -43,10 +43,10 @@ class App extends React.Component<AppPropsType> {
             <>
                 <Switch>
                     <Route path={'/login'} render={() => <Login/>}/>
-                    <div className="app-wrapper">
+                    <div className="wrapper">
                         <HeaderContainer/>
                         <Navbar/>
-                        <div className="app-wrapper-content">
+                        <div className="content">
                             <Route path={'/'} exact render={() => <Redirect to={'/profile'}/>}/>
                             <React.Suspense fallback={<Preloader/>}>
                                 <Route path={'/dialogs'} render={() => <DialogsContainer/>}/>
