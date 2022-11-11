@@ -1,0 +1,26 @@
+.profileInfo {
+  position: relative;
+
+  .mainPhoto {
+    border-radius: 12px 12px 0 0 ;
+    width: 100%;
+    min-height: 280px;
+  }
+
+  .descriptionBlock {
+
+    .avatar {
+      border: 2px solid #fff;
+      border-radius: 12px;
+      position: absolute;
+      max-width: 120px;
+      top: 210px;
+      left: 290px;
+    }
+  }
+
+}
+
+.contact {
+  margin-left: 10px;
+}
