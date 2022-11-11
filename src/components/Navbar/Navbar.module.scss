@@ -1,6 +1,5 @@
 .nav {
   grid-area: navbar;
-  //padding: 20px;
 
   .topBlock {
     background-color: #383a45;
@@ -8,6 +7,7 @@
     position: relative;
     background-image: linear-gradient(135deg, #4f5261 0%, #383a45 50%);
     padding: 2.5rem 1rem 1rem;
+    border-radius: 0 0 12px 12px;
     z-index: 0;
 
     .logo {
@@ -22,13 +22,14 @@
       border-radius: 12px;
       position: relative;
       margin: 1.5rem auto -65px;
-      box-shadow: 0 15px 100px rgb(58 46 68 / 6%);
+      box-shadow: 0 15px 30px rgb(58 46 68 / 6%);
       padding: 2.25rem 2rem;
 
       .item  {
         padding: 10px 0;
 
         a {
+          font-weight: 700;
           text-decoration: none;
           color: #838daa;
 
@@ -63,9 +64,5 @@
   .bottomBlock {
     background-color: #f8f9fb;
     height: calc(100% - 315px);
-    border-right: 1px solid;
-    border-color: #e7edf2;
-    color: #838daa;
-
   }
 }
