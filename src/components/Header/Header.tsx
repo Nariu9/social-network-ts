@@ -1,6 +1,8 @@
 import React from 'react';
-import classes from './Header.module.css';
+import classes from './Header.module.scss';
 import {NavLink} from 'react-router-dom';
+import {Button} from '../common/Button/Button';
+import {FaUserCircle} from 'react-icons/fa';
 
 type HeaderPropsType = {
     isAuth: boolean
@@ -11,14 +13,14 @@ type HeaderPropsType = {
 const Header = ({isAuth, login, logout}: HeaderPropsType) => {
     return (
         <header className={classes.header}>
-            <img
-                src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png"
-                alt="logo"/>
-            <div className={classes.loginBlock}>
-                {isAuth
-                    ? <div>{login} - <button onClick={logout}>Log out</button></div>
-                    : <NavLink to={'/login'}>Login</NavLink>}
-            </div>
+            {isAuth
+                ? <div className={classes.loginBlock}>
+                    <div className={classes.login}>
+                        <FaUserCircle className={classes.icon}/> {login}
+                    </div>
+                    <Button title={'Log out'} callback={logout}/>
+                </div>
+                : <NavLink to={'/login'} className={classes.link}>Login</NavLink>}
         </header>
     )
 }
