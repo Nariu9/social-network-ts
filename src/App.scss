@@ -6,10 +6,13 @@
     grid-template-columns: 2fr 10fr;
     max-width: 1600px;
     min-height: 100vh;
+    gap: 1rem;
 
     .content {
         grid-area: content;
-        background-color: honeydew;
+        background-color: #f8f9fb;
+        border-radius: 12px;
+        box-shadow: 0 15px 30px rgb(58 46 68 / 6%);
     }
 }
 
