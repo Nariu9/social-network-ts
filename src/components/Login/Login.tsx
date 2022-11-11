@@ -17,7 +17,7 @@ const Login: React.FC<LoginPropsType> = ({loginTC, isAuth, captchaUrl}) => {
         <div className={classes.login}>
             <div className={classes.credentials}>
                 <h3 className={classes.title}>Join the network</h3>
-                <p className={classes.subtitle}>A place to share your thoughts and make new connections</p>
+                <p className={classes.subtitle}>A place to share your thoughts <br/> and make new connections</p>
                 <div>
                     <p className={classes.text}>To log in please use common <br/> test account credentials:</p>
                     <p><b>Email:</b> free@samuraijs.com <br/> <b>Password:</b> free</p>
