@@ -7,11 +7,15 @@
   justify-content: space-around;
   align-items: center;
   gap: 10px;
+  @media screen and (max-width: 740px) {
+    border-radius: 0 0 12px 12px;
+  }
 
   .header {
     display: flex;
     flex-direction: column;
     align-items: center;
+
     .icon {
       width: 60px;
       height: 60px;
@@ -43,6 +47,9 @@
     background-color: #f7f7f7;
     outline: none;
     border: 1px solid #8224e3;
+    @media screen and (max-width: 740px) {
+      width: 90%;
+    }
   }
 
   .submitBtn {
