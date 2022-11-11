@@ -5,6 +5,7 @@ import {required} from '../../../utils/validators/validators';
 import styles from '../../common/FormsControls/FormsControls.module.css';
 import classes from './LoginForm.module.scss';
 import icon from '../../../assets/images/icon.svg';
+import {Button} from '../../common/Button/Button';
 
 export type FormDataType = {
     email: string
@@ -35,7 +36,7 @@ const LoginForm: React.FC<CustomProps & InjectedFormProps<FormDataType, CustomPr
             {error}
         </div>}
         <div>
-            <button className={classes.submitBtn}>Log into your account</button>
+            <Button title={'Log into your account'}/>
         </div>
     </form>
 }
