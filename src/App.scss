@@ -1,16 +1,16 @@
-.app-wrapper {
+.wrapper {
     margin: 0 auto;
-    width: 1200px;
     display: grid;
-    grid-template-areas: "h h" "n c";
+    grid-template-areas: "navbar header" "navbar content";
     grid-template-rows: 60px 1fr;
     grid-template-columns: 2fr 10fr;
-    gap: 10px;
-}
+    max-width: 1600px;
+    min-height: 100vh;
 
-.app-wrapper-content {
-    grid-area: c;
-    background-color: honeydew;
+    .content {
+        grid-area: content;
+        background-color: honeydew;
+    }
 }
 
 .preloader {
