@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, useRef, useState} from 'react';
 import classes from './ProfileInfo.module.scss';
 import {ProfileType, UpdateProfileType} from '../../../redux/profile-reducer';
 import userPhoto from '../../../assets/images/userPhoto.jpg'
@@ -6,6 +6,7 @@ import {Preloader} from '../../common/Preloader/Preloader';
 import {ProfileStatusWithHooks} from './ProfileStatus/ProfileStatusWithHooks';
 import {ProfileDataReduxForm} from './ProfileDataForm/ProfileDataForm';
 import photo from '../../../assets/images/Cover_Sri.jpg'
+import {MdPhotoCamera} from 'react-icons/md';
 
 type ProfileInfoPropsType = {
     isOwner: boolean
@@ -26,6 +27,13 @@ const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
                                                      }) => {
 
     const [editMode, setEditMode] = useState(false)
+
+    const inputRef = useRef<HTMLInputElement>(null)
+
+    const selectFileHandler = () => {
+        inputRef && inputRef.current?.click();
+    };
+
     if (!profile) {
         return <Preloader/>
     }
@@ -42,8 +50,13 @@ const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
         <div className={classes.profileInfo}>
             <img src={`${photo}`} alt="field" className={classes.mainPhoto}/>
             <div className={classes.descriptionBlock}>
-                <img src={profile.photos!.large || userPhoto} alt="user" className={classes.avatar}/>
-                {isOwner && <input type="file" onChange={onMainPhotoSelected}/>}
+                <div className={classes.avatarBlock}>
+                    <img src={profile.photos!.large || userPhoto} alt="user"
+                         className={classes.avatar}/>
+                    {isOwner && <div className={classes.circle}><MdPhotoCamera onClick={selectFileHandler}/></div>}
+                    {isOwner &&
+                        <input type="file" ref={inputRef} onChange={onMainPhotoSelected} style={{display: 'none'}}/>}
+                </div>
                 <ProfileStatusWithHooks status={status} updateStatus={updateStatus}/>
                 {editMode
                     ? <ProfileDataReduxForm initialValues={profile} onSubmit={onSubmit}/>
@@ -64,7 +77,7 @@ type ProfileDataType = {
 
 const ProfileData: React.FC<ProfileDataType> = ({profile, isOwner, turnOnEditMode}) => {
     return <div>
-        <div>Hi, my name is {profile.fullName} {isOwner &&
+        <div>{profile.fullName} {isOwner &&
             <button onClick={turnOnEditMode}>Edit profile</button>}</div>
         <div><b>Looking for a job</b>: {profile.lookingForAJob ? 'yes' : 'no'}</div>
         <div><b>My skills</b>: {profile.lookingForAJobDescription}</div>
