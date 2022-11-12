@@ -1,26 +1,52 @@
 .profileInfo {
-  position: relative;
 
   .mainPhoto {
-    border-radius: 12px 12px 0 0 ;
+    border-radius: 12px 12px 0 0;
     width: 100%;
     min-height: 280px;
   }
 
   .descriptionBlock {
+    padding: 30px;
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
 
-    .avatar {
-      border: 2px solid #fff;
-      border-radius: 12px;
-      position: absolute;
-      max-width: 120px;
-      top: 210px;
-      left: 290px;
+    .avatarBlock {
+      position: relative;
+      width: 180px;
+      height: 180px;
+
+      .avatar {
+        width: 100%;
+        outline: 2px solid #8224e3;
+        border: 3px solid #fff;
+        border-radius: 50%;
+      }
+
+      .circle {
+        cursor: pointer;
+        width: 35px;
+        height: 35px;
+        position: absolute;
+        border: 2px solid #838daa;
+        background-color: #fff;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 20px;
+        color: #838daa;
+        transition: ease-out 0.3s;
+        bottom: 1px;
+        left: 124px;
+
+        &:hover {
+          color: #8224e3;
+          border-color: #8224e3;
+        }
+      }
     }
   }
-
-}
-
-.contact {
-  margin-left: 10px;
 }
