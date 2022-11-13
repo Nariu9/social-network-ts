@@ -7,6 +7,7 @@ import {ProfileStatusWithHooks} from './ProfileStatus/ProfileStatusWithHooks';
 import {ProfileDataReduxForm} from './ProfileDataForm/ProfileDataForm';
 import photo from '../../../assets/images/Cover_Sri.jpg'
 import {MdPhotoCamera} from 'react-icons/md';
+import {Button} from '../../common/Button/Button';
 
 type ProfileInfoPropsType = {
     isOwner: boolean
@@ -57,10 +58,27 @@ const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
                     {isOwner &&
                         <input type="file" ref={inputRef} onChange={onMainPhotoSelected} style={{display: 'none'}}/>}
                 </div>
-                <ProfileStatusWithHooks status={status} updateStatus={updateStatus}/>
+                {/*{editMode
+                    ? <ProfileDataReduxForm initialValues={profile} onSubmit={onSubmit}/>
+                    : <ProfileData profile={profile} isOwner={isOwner} status={status} updateStatus={updateStatus}
+                                   turnOnEditMode={() => setEditMode(true)}/>}*/}
                 {editMode
                     ? <ProfileDataReduxForm initialValues={profile} onSubmit={onSubmit}/>
-                    : <ProfileData profile={profile} isOwner={isOwner} turnOnEditMode={() => setEditMode(true)}/>}
+                    : <>
+                        <div>
+                            <div>{profile.fullName}</div>
+                            <ProfileStatusWithHooks status={status} updateStatus={updateStatus}/>
+                            <div><b>Looking for a job</b>: {profile.lookingForAJob ? 'yes' : 'no'}</div>
+                            <div><b>My skills</b>: {profile.lookingForAJobDescription}</div>
+                            <div>{profile.aboutMe}</div>
+                            {isOwner && <Button title={'Edit profile'} callback={() => setEditMode(true)}/>}
+                        </div>
+                        <div>
+                            <b>Contacts</b>: {profile.contacts && Object.keys(profile.contacts).map((k) => <Contact
+                            key={k} contactTitle={k}
+                            contactValue={profile.contacts && profile.contacts[k as keyof typeof profile.contacts]}/>)}
+                        </div>
+                    </>}
             </div>
         </div>
     )
@@ -72,17 +90,21 @@ export default ProfileInfo
 type ProfileDataType = {
     profile: ProfileType
     isOwner: boolean
+    status: string,
+    updateStatus: (status: string) => void
     turnOnEditMode: () => void
 }
 
-const ProfileData: React.FC<ProfileDataType> = ({profile, isOwner, turnOnEditMode}) => {
+const ProfileData: React.FC<ProfileDataType> = ({profile, isOwner, status, updateStatus, turnOnEditMode}) => {
     return <div>
         <div>{profile.fullName} {isOwner &&
             <button onClick={turnOnEditMode}>Edit profile</button>}</div>
+        <ProfileStatusWithHooks status={status} updateStatus={updateStatus}/>
         <div><b>Looking for a job</b>: {profile.lookingForAJob ? 'yes' : 'no'}</div>
         <div><b>My skills</b>: {profile.lookingForAJobDescription}</div>
         <div>{profile.aboutMe}</div>
-        <div><b>Contacts</b>: {profile.contacts && Object.keys(profile.contacts).map((k) => <Contact
+        <div>
+            <b>Contacts</b>: {profile.contacts && Object.keys(profile.contacts).map((k) => <Contact
             key={k} contactTitle={k}
             contactValue={profile.contacts && profile.contacts[k as keyof typeof profile.contacts]}/>)}
         </div>
