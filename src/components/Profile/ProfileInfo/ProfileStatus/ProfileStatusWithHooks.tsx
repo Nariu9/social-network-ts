@@ -2,6 +2,7 @@ import React, {ChangeEvent, KeyboardEvent, useEffect, useState} from 'react';
 
 type ProfileStatusPropsType = {
     status: string,
+    isOwner: boolean
     updateStatus: (status: string) => void
 }
 
@@ -13,7 +14,7 @@ export const ProfileStatusWithHooks: React.FC<ProfileStatusPropsType> = (props) 
         setStatus(props.status)
     }, [props.status])
 
-    const activateEditMode = () => setEditMode(true)
+    const activateEditMode = () => props.isOwner && setEditMode(true)
     const deactivateEditMode = () => {
         setEditMode(false)
         props.updateStatus(status.trim())
@@ -27,8 +28,8 @@ export const ProfileStatusWithHooks: React.FC<ProfileStatusPropsType> = (props) 
 
     return <>
         {!editMode && <div>
-            <b>Status</b>: <span onDoubleClick={activateEditMode}>
-                    {props.status || '--------'}
+            <span onDoubleClick={activateEditMode}>
+                    <i>{props.status || '--------'}</i>
                 </span>
         </div>}
         {editMode && <div>
