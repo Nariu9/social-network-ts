@@ -22,7 +22,6 @@ const Navbar = () => {
                     </div>
                 </div>
             </div>
-            <div className={classes.bottomBlock}/>
         </nav>
     )
 }
