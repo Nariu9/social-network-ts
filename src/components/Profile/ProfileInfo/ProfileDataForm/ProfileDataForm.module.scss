@@ -1,0 +1,22 @@
+.profileForm {
+  display: flex;
+  justify-content: space-between;
+  gap: 50px;
+
+  input,
+  textarea{
+    border-radius: 50px;
+    padding: 10px 20px;
+    background-color: #f7f7f7;
+    outline: none;
+    border: 1px solid #8224e3;
+  }
+
+  textarea {
+    resize: none;
+  }
+
+  button {
+    margin-top: 10px;
+  }
+}
