@@ -1,5 +1,7 @@
 .nav {
   grid-area: navbar;
+  height: 100%;
+  background-color: #f8f9fb;
 
   .topBlock {
     background-color: #383a45;
@@ -59,10 +61,5 @@
         box-shadow: 0 15px 100px rgb(58 46 68 / 6%);
       }
     }
-  }
-
-  .bottomBlock {
-    background-color: #f8f9fb;
-    height: calc(100% - 315px);
   }
 }
