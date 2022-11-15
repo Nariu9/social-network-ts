@@ -7,6 +7,7 @@ import {ThunkDispatch} from 'redux-thunk';
 
 type mapStateToPropsType = {
     posts: Array<PostType>
+    avatar: string | undefined
 }
 type mapDispatchToPropsType = {
     addPost: (newPost: string) => void
@@ -15,7 +16,8 @@ export type MyPostsPropsType = mapStateToPropsType & mapDispatchToPropsType
 
 const mapStateToProps = (state: RootState): mapStateToPropsType => {
     return {
-        posts: state.profilePage.posts
+        posts: state.profilePage.posts,
+        avatar: state.profilePage.profile?.photos?.small
     }
 }
 
