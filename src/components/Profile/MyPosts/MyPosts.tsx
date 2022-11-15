@@ -1,10 +1,12 @@
-import classes from './MyPosts.module.css';
+import classes from './MyPosts.module.scss';
 import React from 'react';
 import Post from './Post/Post';
 import {MyPostsPropsType} from './MyPostsContainer';
 import {Field, InjectedFormProps, reduxForm} from 'redux-form';
 import {maxLengthCreator} from '../../../utils/validators/validators';
 import {Textarea} from '../../common/FormsControls/FormsControls';
+import userPhoto from '../../../assets/images/userPhoto.jpg';
+import {Button} from '../../common/Button/Button';
 
 const maxLength10 = maxLengthCreator(30)
 
@@ -19,8 +21,14 @@ const MyPosts = React.memo((props: MyPostsPropsType) => {
 
     return (
         <div className={classes.postsBlock}>
-            <h3>My posts</h3>
-            <AddPostReduxForm onSubmit={addNewPost}/>
+            <div className={classes.postBg}><h3>What's new?</h3>
+                <div className={classes.newPost}>
+                    <img alt="user"
+                         src={props.avatar || userPhoto}
+                         className={classes.avatar}/>
+                    <AddPostReduxForm onSubmit={addNewPost}/>
+                </div>
+            </div>
             <div className={classes.posts}>
                 {postsElements}
             </div>
@@ -41,7 +49,7 @@ const PostsForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
                    validate={[maxLength10]} FieldType={'textarea'}/>
         </div>
         <div>
-            <button>Add post</button>
+            <Button title={'Add post'}/>
         </div>
     </form>
 }
