@@ -2,16 +2,24 @@ import {profileAPI} from '../api/api';
 import {AppThunk, RootState} from './redux-store';
 import {reset, stopSubmit} from 'redux-form';
 import {handleServerAppError, handleServerNetworkError} from '../utils/errors/errorHandlers';
-import {openNotificationWithIcon} from '../components/Notification/notifications';
+import {showToast} from '../utils/helpers/showToast';
 import {AxiosError} from 'axios';
 import {v1} from 'uuid';
 
 const initialState: ProfilePageStateType = {
     posts: [
-        {id: v1(), message: 'Hi, how are you?', likesCount: 15},
-        {id: v1(), message: 'It\'s my first post', likesCount: 20},
-        {id: v1(), message: 'Or it is not?', likesCount: 3},
-        {id: v1(), message: 'Hah...', likesCount: 0},
+        {
+            id: v1(),
+            message: 'In software, the most beautiful code, the most beautiful functions, and the most beautiful programs are sometimes not there at all.',
+            likesCount: 11
+        },
+        {
+            id: v1(),
+            message: 'Programming isn\'t about what you know; it\'s about what you can figure out.',
+            likesCount: 6
+        },
+        {id: v1(), message: 'One man’s crappy software is another man’s full time job.', likesCount: 28},
+        {id: v1(), message: 'Testing leads to failure, and failure leads to understanding.', likesCount: 18},
     ],
     profile: null,
     status: ''
@@ -66,7 +74,7 @@ export const updateUserStatusThunkCreator = (status: string): AppThunk => async 
         const res = await profileAPI.updateStatus(status)
         if (res.resultCode === 0) {
             dispatch(setUserStatus(status))
-            openNotificationWithIcon('success', 'Success!', 'Status changed successfully')
+            showToast('success', 'Status changed successfully')
         } else {
             handleServerAppError(res)
         }
@@ -77,21 +85,34 @@ export const updateUserStatusThunkCreator = (status: string): AppThunk => async 
 }
 
 export const saveMainPhotoTC = (photo: File): AppThunk => async (dispatch) => {
-    const res = await profileAPI.savePhoto(photo)
-    if (res.resultCode === 0) {
-        dispatch(savePhotoSuccessAC(res.data.photos))
+    try {
+        const res = await profileAPI.savePhoto(photo)
+        if (res.resultCode === 0) {
+            dispatch(savePhotoSuccessAC(res.data.photos))
+        } else {
+            handleServerAppError(res)
+        }
+    } catch (e) {
+        const error = e as AxiosError
+        handleServerNetworkError(error)
     }
 }
 
 export const saveProfileTC = (profile: UpdateProfileType): AppThunk => async (dispatch, getState: () => RootState) => {
     const userId = getState().auth.id
-    const res = await profileAPI.saveProfile(profile)
-    if (res.resultCode === 0) {
-        dispatch(saveProfileSuccessAC(profile))
-        userId && dispatch(getUserProfileTC(userId))
-    } else {
-        dispatch(stopSubmit('edit-profile', {_error: res.messages[0]}))
-        return Promise.reject(res.messages[0])
+    try {
+        const res = await profileAPI.saveProfile(profile)
+        if (res.resultCode === 0) {
+            dispatch(saveProfileSuccessAC(profile))
+            userId && dispatch(getUserProfileTC(userId))
+        } else {
+            dispatch(stopSubmit('edit-profile', {_error: res.messages[0]}))
+            handleServerAppError(res)
+            return Promise.reject(res.messages[0])
+        }
+    } catch (e) {
+        const error = e as AxiosError
+        handleServerNetworkError(error)
     }
 }
 

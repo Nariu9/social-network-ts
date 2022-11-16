@@ -1,7 +1,7 @@
 import {authAPI, securityAPI} from '../api/api';
 import {AppThunk} from './redux-store';
 import {stopSubmit} from 'redux-form';
-import {openNotificationWithIcon} from '../components/Notification/notifications';
+import {showToast} from '../utils/helpers/showToast';
 import {handleServerAppError, handleServerNetworkError} from '../utils/errors/errorHandlers';
 import {AxiosError} from 'axios';
 
@@ -43,7 +43,8 @@ export const getAuthDataThunkCreator = (): AppThunk => async (dispatch) => {
             dispatch(setAuthUserData(id, login, email, true))
         }
     } catch (e) {
-        openNotificationWithIcon('error', 'Error!', 'Please turn on VPN and try again')
+        const error = e as AxiosError
+        handleServerNetworkError(error)
     }
 }
 
@@ -51,7 +52,7 @@ export const loginTC = (email: string, password: string, rememberMe: boolean, ca
     authAPI.login(email, password, rememberMe, captcha).then(data => {
         if (data.resultCode === 0) {
             dispatch(getAuthDataThunkCreator())
-            openNotificationWithIcon('success', 'Success!', 'Logged in successfully')
+            showToast('success', 'Logged in successfully')
         } else {
             if (data.resultCode === 10) {
                 dispatch(getCaptchaUrlTC())
@@ -70,7 +71,7 @@ export const logoutTC = (): AppThunk => async (dispatch) => {
         const res = await authAPI.logout()
         if (res.resultCode === 0) {
             dispatch(setAuthUserData(null, null, null, false,))
-            openNotificationWithIcon('success', 'Success!', 'Logged out successfully')
+            showToast('success', 'Logged out successfully')
         } else {
             handleServerAppError(res)
         }
