@@ -2,18 +2,16 @@
   display: flex;
   justify-content: space-between;
   gap: 50px;
+  flex-wrap: wrap;
 
-  input,
-  textarea{
+  input {
     border-radius: 50px;
-    padding: 10px 20px;
+    padding: 5px 10px;
     background-color: #f7f7f7;
     outline: none;
     border: 1px solid #8224e3;
-  }
-
-  textarea {
-    resize: none;
+    margin-bottom: 5px;
+    color: #626c72;
   }
 
   button {
