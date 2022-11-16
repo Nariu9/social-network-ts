@@ -1,0 +1,22 @@
+.form {
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+
+  textarea {
+    background: transparent;
+    padding: 10px;
+    width: 100%;
+    border-radius: 30px;
+    border: 1px solid #e7edf2;
+    resize: none;
+    color: #626c72;
+    outline: none;
+  }
+
+  .btnWrapper {
+    align-self: flex-end;
+    margin-top: 10px;
+  }
+}
