@@ -1,12 +1,12 @@
 import {ResponseType} from '../../api/api';
-import {openNotificationWithIcon} from '../../components/Notification/notifications';
+import {showToast} from '../helpers/showToast';
 
 export const handleServerAppError = <T>(data: ResponseType<T>) => {
     const description = data.messages.length ? data.messages[0] : 'Some error has occurred'
-    openNotificationWithIcon('error', 'Error!', description)
+    showToast('error', description)
 }
 
 export const handleServerNetworkError = (error: { message: string }) => {
     const description = error.message ? error.message : 'Some error has occurred'
-    openNotificationWithIcon('error', 'Error!', description)
+    showToast('error', description)
 }
