@@ -9,6 +9,8 @@ import {connect, Provider} from 'react-redux';
 import {initializeAppTC} from './redux/app-reducer';
 import store, {RootState} from './redux/redux-store';
 import {Preloader} from './components/common/Preloader/Preloader';
+import 'react-toastify/dist/ReactToastify.css';
+import {ToastContainer} from 'react-toastify';
 
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
@@ -16,36 +18,26 @@ const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileCo
 
 class App extends React.Component<AppPropsType> {
 
-    catchAllUnhandledErrors = (e: PromiseRejectionEvent) => {
-        alert('Some error occurred')
-        console.error(e)
-    }
-
     componentDidMount() {
         this.props.initializeAppTC()
-        window.addEventListener('unhandledrejection', this.catchAllUnhandledErrors)
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener('unhandledrejection', this.catchAllUnhandledErrors)
     }
 
     render() {
         if (!this.props.initialized) {
-            return <div className={'preloader'}><Preloader/></div>
+            return <div className={'preloader'}><Preloader inside={false}/></div>
         }
 
         return (
             <>
                 <Switch>
+                    <Route path={'/login'} render={() => <Login/>}/>
                     <>
-                        <Route path={'/login'} render={() => <Login/>}/>
                         <div className="wrapper">
                             <HeaderContainer/>
                             <Navbar/>
                             <div className="content">
                                 <Route path={'/'} exact render={() => <Redirect to={'/profile'}/>}/>
-                                <React.Suspense fallback={<Preloader/>}>
+                                <React.Suspense fallback={<Preloader inside/>}>
                                     <Route path={'/dialogs'} render={() => <DialogsContainer/>}/>
                                     <Route path={'/profile/:userId?'} render={() => <ProfileContainer/>}/>
                                     <Route path={'/users'} render={() => <UsersContainer/>}/>
@@ -54,6 +46,7 @@ class App extends React.Component<AppPropsType> {
                         </div>
                     </>
                 </Switch>
+                <ToastContainer/>
             </>
         );
     }
