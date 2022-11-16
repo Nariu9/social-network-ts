@@ -28,7 +28,7 @@ export const ProfileStatusWithHooks: React.FC<ProfileStatusPropsType> = (props) 
 
     return <>
         {!editMode && <div>
-            <span onDoubleClick={activateEditMode}>
+            <span onDoubleClick={activateEditMode} style={{wordWrap: 'break-word'}}>
                     <i>{props.status || '--------'}</i>
                 </span>
         </div>}
