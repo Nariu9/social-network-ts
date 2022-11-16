@@ -7,13 +7,13 @@
   }
 
   .descriptionBlock {
+    margin-left: 15%;
     padding: 30px;
-    width: 80%;
-    margin: 0 auto;
     display: flex;
-    justify-content: space-around;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
     flex-wrap: wrap;
+    gap: 50px;
 
     .avatarBlock {
       position: relative;
@@ -47,6 +47,33 @@
         &:hover {
           color: #8224e3;
           border-color: #8224e3;
+        }
+      }
+    }
+
+    .personalInfo {
+      max-width: 33%;
+
+      & h3 {
+        font-size: 24px;
+        margin-bottom: 5px;
+      }
+
+      button {
+        margin-top: 10px;
+      }
+    }
+
+    .contacts {
+      & h3 {
+        font-size: 20px;
+        margin-bottom: 5px;
+      }
+
+      .contact {
+        a {
+          text-decoration: none;
+          color: #0437F2;
         }
       }
     }

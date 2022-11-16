@@ -36,7 +36,7 @@ const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
     };
 
     if (!profile) {
-        return <Preloader/>
+        return <Preloader inside/>
     }
     const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
         e.target.files && saveMainPhoto(e.target.files[0])
@@ -58,27 +58,10 @@ const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
                     {isOwner &&
                         <input type="file" ref={inputRef} onChange={onMainPhotoSelected} style={{display: 'none'}}/>}
                 </div>
-                {/*{editMode
-                    ? <ProfileDataReduxForm initialValues={profile} onSubmit={onSubmit}/>
-                    : <ProfileData profile={profile} isOwner={isOwner} status={status} updateStatus={updateStatus}
-                                   turnOnEditMode={() => setEditMode(true)}/>}*/}
                 {editMode
                     ? <ProfileDataReduxForm initialValues={profile} onSubmit={onSubmit}/>
-                    : <>
-                        <div>
-                            <div>{profile.fullName}</div>
-                            <ProfileStatusWithHooks status={status} updateStatus={updateStatus}/>
-                            <div><b>Looking for a job</b>: {profile.lookingForAJob ? 'yes' : 'no'}</div>
-                            <div><b>My skills</b>: {profile.lookingForAJobDescription}</div>
-                            <div>{profile.aboutMe}</div>
-                            {isOwner && <Button title={'Edit profile'} callback={() => setEditMode(true)}/>}
-                        </div>
-                        <div>
-                            <b>Contacts</b>: {profile.contacts && Object.keys(profile.contacts).map((k) => <Contact
-                            key={k} contactTitle={k}
-                            contactValue={profile.contacts && profile.contacts[k as keyof typeof profile.contacts]}/>)}
-                        </div>
-                    </>}
+                    : <ProfileData profile={profile} isOwner={isOwner} status={status} updateStatus={updateStatus}
+                                   turnOnEditMode={() => setEditMode(true)}/>}
             </div>
         </div>
     )
@@ -96,19 +79,30 @@ type ProfileDataType = {
 }
 
 const ProfileData: React.FC<ProfileDataType> = ({profile, isOwner, status, updateStatus, turnOnEditMode}) => {
-    return <div>
-        <div>{profile.fullName} {isOwner &&
-            <button onClick={turnOnEditMode}>Edit profile</button>}</div>
-        <ProfileStatusWithHooks status={status} updateStatus={updateStatus}/>
-        <div><b>Looking for a job</b>: {profile.lookingForAJob ? 'yes' : 'no'}</div>
-        <div><b>My skills</b>: {profile.lookingForAJobDescription}</div>
-        <div>{profile.aboutMe}</div>
-        <div>
-            <b>Contacts</b>: {profile.contacts && Object.keys(profile.contacts).map((k) => <Contact
-            key={k} contactTitle={k}
-            contactValue={profile.contacts && profile.contacts[k as keyof typeof profile.contacts]}/>)}
+    return <>
+        <div className={classes.personalInfo}>
+            <h3>{profile.fullName}</h3>
+            <ProfileStatusWithHooks status={status} isOwner={isOwner} updateStatus={updateStatus}/>
+            <div><b>Available for hire:</b> {profile.lookingForAJob ? 'yes' : 'no'}</div>
+            <div><b>My skills:</b> {profile.lookingForAJobDescription}</div>
+            <div><b>About me:</b> {profile.aboutMe}</div>
+            {isOwner && <Button title={'Edit profile'} callback={turnOnEditMode}/>}
         </div>
-    </div>
+        {profile.contacts && Object.values(profile.contacts).some(value => value !== null)
+            && <div className={classes.contacts}>
+                <h3>Follow me</h3> {profile.contacts && Object.keys(profile.contacts).map((k) => {
+                if (profile.contacts
+                    && profile.contacts[k as keyof typeof profile.contacts] !== null
+                    && profile.contacts[k as keyof typeof profile.contacts].trim() !== '') {
+                    return <Contact
+                        key={k}
+                        contactTitle={k}
+                        contactValue={profile.contacts[k as keyof typeof profile.contacts]}/>
+                }
+                return null
+            })}
+            </div>}
+    </>
 }
 
 type ContactType = {
@@ -117,5 +111,5 @@ type ContactType = {
 }
 
 export const Contact: React.FC<ContactType> = ({contactTitle, contactValue}) => {
-    return <div className={classes.contact}><b>{contactTitle}</b>: {contactValue}</div>
+    return <div className={classes.contact}><b>{contactTitle}:</b> <a href={contactValue} target={'_blank'} rel={'noreferrer'}>{contactValue}</a></div>
 }
