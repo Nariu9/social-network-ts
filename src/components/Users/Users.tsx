@@ -32,7 +32,7 @@ export const Users: React.FC<UsersPropsType> = ({
                    pageSize={pageSize}
                    currentPage={currentPage}
                    onPageChanged={onPageChanged}/>
-        {isFetching ? <Preloader/> : users.map(u => <User key={u.id} user={u}
+        {isFetching ? <Preloader inside/> : users.map(u => <User key={u.id} user={u}
                                                           followingInProgress={followingInProgress}
                                                           followThunkCreator={followThunkCreator}
                                                           unfollowThunkCreator={unfollowThunkCreator}/>)
