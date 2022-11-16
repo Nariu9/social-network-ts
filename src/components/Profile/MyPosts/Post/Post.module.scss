@@ -1,0 +1,53 @@
+.post {
+  width: 600px;
+  margin: 1rem auto;
+  background: #fff;
+  position: relative;
+  padding: 1.5rem 1.5rem 0 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 20px 90px rgb(58 46 68 / 5%);
+
+  .user {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .message {
+    word-wrap: break-word;
+    padding: 10px 0;
+    border-bottom: 1px solid #e5e5e5;
+  }
+
+  .bottomBlock {
+    padding: 5px 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    .like,
+    .basket {
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .like {
+      color: #838daa;
+      margin-right: 8px;
+    }
+
+    .basket {
+      margin-left: auto;
+      color: #d51e26;
+    }
+  }
+}
+
+.post img {
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+  outline: 1px solid #8224e3;
+  border: 2px solid #fff;
+  margin-right: 10px;
+}

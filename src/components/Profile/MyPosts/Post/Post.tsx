@@ -1,16 +1,30 @@
-import classes from "./Post.module.css";
-import React from "react";
-import {PostType} from "../../../../redux/profile-reducer";
+import classes from './Post.module.scss';
+import React from 'react';
+import {PostType} from '../../../../redux/profile-reducer';
+import userPhoto from '../../../../assets/images/userPhoto.jpg'
+import {AiFillDelete, AiFillHeart} from 'react-icons/ai';
 
+type PostPropsType = PostType & {
+    avatar: string | undefined
+    name: string | undefined
+    deletePost: (postId: string) => void
+}
 
-
-
-const Post = (props:PostType) => {
+const Post = (props: PostPropsType) => {
     return (
-        <div className={classes.item}><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLpH2L9SxARizd9V_dTyF1xaNW_71Tj0QjKQ&usqp=CAU" alt="avatar"/>
-            {props.message}
-            <div>
-                <span>like</span> {props.likesCount}
+        <div className={classes.post}>
+
+            <div className={classes.user}>
+                <img alt="user"
+                     src={props.avatar || userPhoto}
+                     className={classes.avatar}/>
+                <h3>{props.name || 'Marty Wilson'}</h3>
+            </div>
+            <div className={classes.message}>{props.message}</div>
+            <div className={classes.bottomBlock}>
+                <AiFillHeart className={classes.like}/>
+                <p>{props.likesCount}</p>
+                <AiFillDelete className={classes.basket} onClick={() => props.deletePost(props.id)}/>
             </div>
         </div>
     )
