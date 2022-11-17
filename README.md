@@ -1,17 +1,12 @@
 # Social network
 
----
-
 A place to post some information and make new connections.
 
-### Application preview
-
----
+## Application preview
 
 ![Social network preview](/src/assets/images/social-network.png "Social network preview")
 
----
-### Technology stack
+## Technology stack
 
 * TypeScript
 * React (class components)
