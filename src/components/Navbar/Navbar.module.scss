@@ -15,8 +15,9 @@
 
     .logo {
       margin: 0 auto;
-      width: 110px;
-      height: 150px;
+      display: block;
+      min-width: 50%;
+      height: auto;
     }
 
     .card {
@@ -30,6 +31,9 @@
 
       .item  {
         padding: 10px 0;
+        @media screen and (max-width: 1170px){
+          text-align: center;
+        }
 
         a {
           font-weight: 700;
@@ -39,6 +43,15 @@
           .icon {
             font-size: 18px;
             margin-right: 5px;
+            @media screen and (max-width: 1170px){
+              font-size: 26px;
+            }
+          }
+        }
+
+        span {
+          @media screen and (max-width: 1170px){
+            display: none;
           }
         }
 
