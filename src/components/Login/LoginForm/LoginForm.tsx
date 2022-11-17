@@ -4,7 +4,7 @@ import {createField, Input} from '../../common/FormsControls/FormsControls';
 import {required} from '../../../utils/validators/validators';
 import styles from '../../common/FormsControls/FormsControls.module.css';
 import classes from './LoginForm.module.scss';
-import icon from '../../../assets/images/icon.svg';
+import icon from '../../../assets/icons/icon.svg';
 import {Button} from '../../common/Button/Button';
 
 export type FormDataType = {

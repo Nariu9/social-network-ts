@@ -1,5 +1,5 @@
 import React from 'react';
-import preloader from '../../../assets/images/preloader .svg';
+import preloader from '../../../assets/icons/preloader .svg';
 import classes from './Preloader.module.scss';
 
 type PreloaderPropsType = {
